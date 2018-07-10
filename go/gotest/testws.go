@@ -1,6 +1,8 @@
 package main
 
 import (
+	// "strings"
+	"encoding/json"
 	"github.com/gorilla/websocket"
 	"net/http"
 	"strconv"
@@ -13,11 +15,11 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 type RequestJSON struct {
-	pipeNum int32
-	dataItemNum int32
+	pipeNum string `json:"pipeNum"` 
+	dataItemNum string `json:"dataItemNum"`
 }
 func serveWs(ws *websocket.Conn) {
-	jsonData := RequestJSON{}
+	jsonData := &RequestJSON{"3","4"}
 	//ws.ReadJSON(&jsonData)
 	//println(jsonData.pipeNum)
 
@@ -34,8 +36,15 @@ func serveWs(ws *websocket.Conn) {
 	//}
 	//println(p)
 	//ws.WriteMessage(mt, p)
-	ws.ReadJSON(&jsonData)
-	fmt.Printf("client request pipe %d for %d data items\n", jsonData.pipeNum, jsonData.dataItemNum)
+	// ws.ReadJSON(&jsonData)
+	_, msgb, _ := ws.ReadMessage()
+	println(msgb)
+	msg := `{"pipeNum": "1", "dataItemNum": "2000"}`
+	// dec := json.NewDecoder(strings.NewReader(msg))
+	// dec.Decode(&jsonData)
+	json.Unmarshal([]byte(msg), jsonData)
+	println(jsonData.dataItemNum)
+	fmt.Printf("client request pipe %s for %s data items\n", jsonData.pipeNum, jsonData.dataItemNum)
 	time.Sleep(4*time.Second)
 }
 
@@ -49,6 +58,10 @@ func serveHttp(w http.ResponseWriter, r *http.Request) {
 	defer ws.Close()
 	println("a websocket connection established")
 	serveWs(ws)
+	// mt, msg, _ := ws.ReadMessage()
+	// fmt.Printf("receved %s", msg)
+	// ws.WriteMessage(mt, msg)
+
 }
 
 func listen(ip string, port int) {

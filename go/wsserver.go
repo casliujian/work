@@ -7,8 +7,8 @@ import (
 	"time"
 	"fmt"
 	"unsafe"
-	"github.com/gorilla/websocket"
-	"net/http"
+	// "github.com/gorilla/websocket"
+	// "net/http"
 )
 
 var intsize = 4
@@ -165,26 +165,26 @@ func stopReceiving() {
 	keepReceiving = false
 }
 
-var upgrader = websocket.Upgrader{}
-func serveWs(ws *websocket.Conn) {
-	jsonData := struct {}{}
-	ws.ReadJSON()
-}
+// var upgrader = websocket.Upgrader{}
+// func serveWs(ws *websocket.Conn) {
+// 	jsonData := struct {}{}
+// 	ws.ReadJSON(&jsonData)
+// }
 
-func serveHttp(w http.ResponseWriter, r *http.Request) {
-	ws, err := upgrader.Upgrade(w, r, nil)
-	if err != nil {
-		println("error when handling http request")
-		return
-	}
-	defer ws.Close()
-	serveWs(ws)
-}
+// func serveHttp(w http.ResponseWriter, r *http.Request) {
+// 	ws, err := upgrader.Upgrade(w, r, nil)
+// 	if err != nil {
+// 		println("error when handling http request")
+// 		return
+// 	}
+// 	defer ws.Close()
+// 	serveWs(ws)
+// }
 
-func listenWsClient(ip string, port int) {
-	wssAddr := ip+":"+strconv.Itoa(port)
+// func listenWsClient(ip string, port int) {
+// 	wssAddr := ip+":"+strconv.Itoa(port)
 
-}
+// }
 
 
 

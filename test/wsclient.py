@@ -22,8 +22,8 @@ async def hello(uri):
         # await websocket.send(totalb)
 
         jsonData = json.dumps({'pipeNum': 1, 'dataItemNum': 2000}) + "\n"
-        websocket.send("helloworld")
-        websocket.send(jsonData)
+        # await websocket.send("helloworld")
+        await websocket.send(jsonData)
         print("json data sent")
 
         msg = await websocket.recv()
