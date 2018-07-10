@@ -51,7 +51,7 @@ class ReceiveDataThread(threading.Thread):
                     channel_bytes[received_channel_byte_len : received_channel_byte_len + received_len] = received
                     received_channel_byte_len += received_len
                 # Calculate the channel index from bytes, big endian, unsigned
-                channel_idx = int.from_bytes(channel_bytes[0 : channel_byte_len], byteorder='big', signed=False)
+                channel_idx = int.from_bytes(channel_bytes[0 : channel_byte_len], byteorder='little', signed=False)
 
                 # Now parse the float data
                 received_data_byte_len = 0
@@ -63,7 +63,7 @@ class ReceiveDataThread(threading.Thread):
                     received_data_byte_len += received_len
                 # Conver byte array into double array 
                 data_array = array.array('d')
-                data_array.frombytes(data_bytes[0:data_byte_len])
+                # data_array.frombytes(data_bytes[0:data_byte_len])
                 # for d in data_array:
                 #     print(d)
                 round += 1
@@ -110,29 +110,28 @@ def register(request):
 # async def wssend(websocket, data):
 #     pass
 
-async def echo(ws, path):
-    channelb = await ws.recv()
-    channel = int.from_bytes(channelb, byteorder='big', signed=False)
-    totalb = await ws.recv()
-    total = int.from_bytes(totalb, byteorder='big',signed=False)
-    print('A new client want channel', channel, 'for', total, 'items')
-    q = register((channel,total))
-    async while True:    
-        data_item = await q.get(block=True)
-        print('websocket server sending', data_item)
-        # data_item = 1.0001
-        await ws.send(struct.pack('d',data_item))
+# async def echo(ws, path):
+#     channelb = await ws.recv()
+#     channel = int.from_bytes(channelb, byteorder='big', signed=False)
+#     totalb = await ws.recv()
+#     total = int.from_bytes(totalb, byteorder='big',signed=False)
+#     print('A new client want channel', channel, 'for', total, 'items')
+#     q = register((channel,total))
+#     async while True:    
+#         data_item = await q.get(block=True)
+#         print('websocket server sending', data_item)
+#         # data_item = 1.0001
+#         await ws.send(struct.pack('d',data_item))
 
 
 
 received_thread = ReceiveDataThread(registry)
 received_thread.start()
-# received_thread.join()
+received_thread.join()
 
-asyncio.get_event_loop().run_until_complete(
-    websockets.serve(echo, '127.0.0.1', 10019))
-try:
-    asyncio.get_event_loop().run_forever()
-except KeyboardInterrupt:
-    pass
-    # datasocket.close()
+# asyncio.get_event_loop().run_until_complete(
+#     websockets.serve(echo, '127.0.0.1', 10019))
+# try:
+#     asyncio.get_event_loop().run_forever()
+# except KeyboardInterrupt:
+#     pass
