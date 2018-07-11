@@ -46,9 +46,6 @@ type RequestJSON struct {
 func serveWs(ws *websocket.Conn) {
 	jsonData := &RequestJSON{}
 	ws.ReadJSON(jsonData)
-	// _, msgb, _ := ws.ReadMessage()
-	// println(msgb)
-	// json.Unmarshal(msgb, jsonData)
 	println(jsonData.DataItemNum)
 	fmt.Printf("client request pipe %d for %d data items\n", jsonData.PipeNum, jsonData.DataItemNum)
 
@@ -66,9 +63,6 @@ func serveWs(ws *websocket.Conn) {
 			break
 		}
 	}
-
-
-	//time.Sleep(4*time.Second)
 }
 
 func serveHttp(w http.ResponseWriter, r *http.Request) {
