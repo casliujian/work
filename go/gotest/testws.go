@@ -2,7 +2,7 @@ package main
 
 import (
 	// "strings"
-	"encoding/json"
+	// "encoding/json"
 	"github.com/gorilla/websocket"
 	"net/http"
 	"strconv"
@@ -15,36 +15,22 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 type RequestJSON struct {
-	pipeNum string `json:"pipeNum"` 
-	dataItemNum string `json:"dataItemNum"`
+	PipeNum int `json:"pipeNum"` 
+	DataItemNum int `json:"dataItemNum"`
 }
 func serveWs(ws *websocket.Conn) {
-	jsonData := &RequestJSON{"3","4"}
-	//ws.ReadJSON(&jsonData)
-	//println(jsonData.pipeNum)
+	jsonData := &RequestJSON{}
+	ws.ReadJSON(jsonData)
+	// _, msgb, _ := ws.ReadMessage()
+	// println(msgb)
+	// json.Unmarshal(msgb, jsonData)
+	println(jsonData.DataItemNum)
+	fmt.Printf("client request pipe %d for %d data items\n", jsonData.PipeNum, jsonData.DataItemNum)
 
-	//_, jd, _ := ws.NextReader()
-	//buf := make([]byte, 200)
-	//jd.Read(buf)
-	//println("received :"+string(buf))
-	//
-	//
-	//mt, p, err := ws.ReadMessage()
-	//if err != nil && err != io.EOF {
-	//	println("error when serving websocket")
-	//	return
-	//}
-	//println(p)
-	//ws.WriteMessage(mt, p)
-	// ws.ReadJSON(&jsonData)
-	_, msgb, _ := ws.ReadMessage()
-	println(msgb)
-	msg := `{"pipeNum": "1", "dataItemNum": "2000"}`
-	// dec := json.NewDecoder(strings.NewReader(msg))
-	// dec.Decode(&jsonData)
-	json.Unmarshal([]byte(msg), jsonData)
-	println(jsonData.dataItemNum)
-	fmt.Printf("client request pipe %s for %s data items\n", jsonData.pipeNum, jsonData.dataItemNum)
+	// Make a new channel to fetch data to be sent for each client
+	dataChan := make(chan float32)
+
+
 	time.Sleep(4*time.Second)
 }
 
@@ -58,10 +44,6 @@ func serveHttp(w http.ResponseWriter, r *http.Request) {
 	defer ws.Close()
 	println("a websocket connection established")
 	serveWs(ws)
-	// mt, msg, _ := ws.ReadMessage()
-	// fmt.Printf("receved %s", msg)
-	// ws.WriteMessage(mt, msg)
-
 }
 
 func listen(ip string, port int) {

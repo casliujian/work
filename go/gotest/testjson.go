@@ -14,11 +14,20 @@ type Votes struct {
     OptionA string `json:"option_A"`
 }
 
+type TestJson struct {
+    Num int `json:"num"`
+    Str string `json:"str"`
+}
+
 func main() {
     s := `{ "votes": { "option_A": "3" } }`
+    test := `{"num": 123,"str": "helloworld"}`
     data := &Data{
         Votes: &Votes{},
     }
+    testJson := new(TestJson)
+    json.Unmarshal([]byte(test), testJson)
+    fmt.Printf("num: %d, str: %s", testJson.Num, testJson.Str)
     err := json.Unmarshal([]byte(s), data)
     fmt.Println(err)
     fmt.Println(data.Votes)
