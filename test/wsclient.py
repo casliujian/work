@@ -9,8 +9,8 @@ import struct
 import json
 
 recvno = 40000
-channel = int(sys.argv[1])
-total = int(sys.argv[2])
+pipeNum = int(sys.argv[1])
+dataItemNum = int(sys.argv[2])
 
 async def hello(uri):
     recvd = 0
@@ -21,16 +21,14 @@ async def hello(uri):
         # totalb = total.to_bytes(4, byteorder='little',signed=False)
         # await websocket.send(totalb)
 
-        jsonData = json.dumps({'pipeNum': 1, 'dataItemNum': 2000})
+        jsonData = json.dumps({'pipeNum': pipeNum, 'dataItemNum': dataItemNum})
         # await websocket.send("helloworld")
         await websocket.send(jsonData)
         print("json data sent")
 
-        msg = await websocket.recv()
-        # for msg in websocket:
-        if recvd != recvno:
-            print('received:', msg)
-            recvd += 1
+        while True:
+            msg = await websocket.recv()
+            print("received", msg)
         
 
 
