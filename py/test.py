@@ -9,7 +9,5 @@ if __name__ == "__main__":
     serverPort = int(sys.argv[2])
     clientNum = int(sys.argv[3])
     for i in range(clientNum):
-        p = Process(
-            target=wsclient.startClient, 
-            args=((serverIp, serverPort, i%4)+1, 2000))
+        p = Process(target=wsclient.startClient, args=(serverIp, serverPort, (i%4)+1, 2000))
         p.start()

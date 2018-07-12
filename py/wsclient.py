@@ -26,10 +26,10 @@ async def hello(uri, pipeNum, dataItemNum):
 
 def startClient(serverIp, serverPort, pipeNum, dataItemNum):
     asyncio.get_event_loop().run_until_complete(
-        hello(('ws://%s:%d/' % serverIp, serverPort), pipeNum, dataItemNum))
+        hello(('ws://%s:%d/' % (serverIp, serverPort)), pipeNum, dataItemNum))
         
 
 if __name__ == "__main__":
     pipeNum = int(sys.argv[1])
     dataItemNum = int(sys.argv[2])
-    startClient("localhost", 1999, pipeNum, dataItemNum)
+    startClient("192.168.9.72", 1999, pipeNum, dataItemNum)
