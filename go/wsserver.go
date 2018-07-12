@@ -203,7 +203,7 @@ func main() {
 	go readData("localhost", 2000)
 	// Shut down the system in `timeout` seconds
 	go shuttingDown(*timeout)
-	listen("localhost", *wsport)
+	listen("192.168.9.72", *wsport)
 	//time.Sleep(10*time.Second)
 	//stopReceiving()
 	//time.Sleep(1*time.Second)
