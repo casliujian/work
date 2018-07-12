@@ -1,4 +1,6 @@
-# Data Posting
+# 软件说明
 
-* Folder `go`: go source code
-* Folder `py`: python source code
+文件夹：
+* `go`: Go源码
+* `py`: Python源码
+

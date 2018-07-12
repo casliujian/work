@@ -8,7 +8,7 @@ import array
 import struct
 import json
 
-recvno = 40000
+# recvno = 40000
 
 
 async def hello(uri, pipeNum, dataItemNum):
@@ -23,6 +23,7 @@ async def hello(uri, pipeNum, dataItemNum):
             da = array.array('d')
             da.frombytes(msg)
             print("received", da)
+
 
 def startClient(serverIp, serverPort, pipeNum, dataItemNum):
     asyncio.get_event_loop().run_until_complete(

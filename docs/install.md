@@ -1,4 +1,4 @@
-# How to install the system
+# 安装
 
 The system is written in programming language Go.
 To install the system, you should install first:
