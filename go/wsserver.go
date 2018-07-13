@@ -12,7 +12,6 @@ import (
 	"os"
 	"strconv"
 	"time"
-	"unsafe"
 	"nanomsg.org/go-mangos/protocol/sub"
 	"nanomsg.org/go-mangos/transport/ipc"
 	"nanomsg.org/go-mangos/transport/tcp"
@@ -43,72 +42,41 @@ func readDataNanoMSG(url string) {
 		println("NanoMSG client cannot subscribe topics")
 		return
 	}
-	//var msg []byte
-	// Read data from datasource repeatedly
 
-
-	//pipeNumBytes := make([]byte, intnumber*intsize)
-	//dataBytes := make([]byte, floatnumber*floatsize)
-
-	//pipeNumBuf := bytes.NewBuffer(pipeNumBytes)
-	//dataBuf := bytes.NewBuffer(dataBytes)
-
-	//int32Bytes := make([]byte, intsize)
-	//float64Bytes := make([]byte, floatsize)
-	//int32Buf := bytes.NewBuffer(int32Bytes)
-	//float64Buf := bytes.NewBuffer(float64Bytes)
-	//
-	pipeNums := make([]int32, intnumber)
-	datas := make([]float64, floatnumber)
 	for {
 		msg, err := sock.Recv()
 		if err != nil {
 			println("error when receiving pipe number from NanoMSG")
 			return
 		}
-		println("size of msg:", len(msg))
-		//pipeInfo := msg[0:15]
-		//dataInfo := msg[16:]
-		pipeBuf := new(bytes.Buffer)
-		dataBuf := new(bytes.Buffer)
-		pipeBuf.Write(msg[0:15])
-		dataBuf.Write(msg[16:])
-		binary.Read(pipeBuf, binary.LittleEndian, &pipeNums)
-		binary.Read(dataBuf, binary.LittleEndian, &datas)
-		fmt.Printf("pipeinfo %x\n", pipeNums)
-		sendPipeData(pipeNums, datas)
+		//println("size of msg:", len(msg))
+
+		PipeNums := make([]int32, intnumber)
+		//pipeReader := bytes.NewBuffer(msg[0:15])
+		//binary.Read(pipeReader, binary.LittleEndian, &PipeNums)
+		//
+		Datas := make([]float64, floatnumber)
+		//dataReader := bytes.NewBuffer(msg[16:])
+		//binary.Read(dataReader, binary.LittleEndian, &Datas)
+
+		var pipeNum int32
+		var data float64
+		var i int
+		for i = 0; i<intnumber; i++ {
+			binary.Read(bytes.NewBuffer(msg[i*4:(i+1)*4]),binary.LittleEndian,&pipeNum)
+			PipeNums[i] = pipeNum
+		}
+		for i=0; i<floatnumber; i++ {
+			binary.Read(bytes.NewBuffer(msg[16+i*8:16+(i+1)*8]),binary.LittleEndian,&data)
+			Datas[i] = data
+		}
 
 
-		//var i int
-		//var pipeNum int32
-		//var data float64
-		//for i = 0; i<4; i++ {
-		//	msg, err = sock.Recv()
-		//	if err != nil {
-		//		println("error when receiving pipe number from NanoMSG")
-		//		return
-		//	}
-		//	//intmsg := *((*int32)(unsafe.Pointer(&msg)))
-		//	println("received msg size", len(msg))
-		//	//pipeNumBytes[i*intsize : i*intsize+4] = msg
-		//
-		//	binary.Read(bytes.NewBuffer(msg), binary.LittleEndian, &pipeNum)
-		//	pipeNums[i] = pipeNum
-		//}
-		////binary.Write(pipeNumBuf, binary.LittleEndian, pipeNums)
-		//for i = 0; i < 65536; i++ {
-		//	msg, err = sock.Recv()
-		//	if err != nil {
-		//		println("error when receiving data from NanoMSG")
-		//		return
-		//	}
-		//	//dataBytes[i*floatsize : i*floatsize+8] = msg
-		//	binary.Read(bytes.NewBuffer(msg), binary.LittleEndian, &data)
-		//	datas[i] = data
-		//}
-		////binary.Write(dataBuf, binary.LittleEndian, datas)
-		//
-		//sendPipeData(pipeNums, datas)
+		//fmt.Printf("raw pipenums1 %x\n", msg[0:15])
+		//fmt.Printf("pipeinfo %v\n", PipeNums)
+		//fmt.Printf("PipeNums[0] %d\n", pipeNum)
+		sendPipeData(PipeNums[:], Datas[:])
+
 	}
 
 }
@@ -122,7 +90,7 @@ func readDataRAW(ip string, port int) {
 		return
 	}
 	println("connected to " + addr)
-	round := 0
+	sockround := 0
 	startNano := time.Now().UnixNano()
 	for keepReceiving {
 		// Receiving pipe number
@@ -163,11 +131,11 @@ func readDataRAW(ip string, port int) {
 		binary.Read(dataReader, binary.LittleEndian, &datas)
 		sendPipeData(pipeNums, datas)
 
-		round = round + 1
+		sockround = sockround + 1
 	}
 	println("end receiving loop")
 	finishNano := time.Now().UnixNano()
-	fmt.Printf("%f round(s) per second\n", float32(round)/float32((finishNano-startNano)/1000000000))
+	fmt.Printf("%f round(s) per second\n", float32(sockround)/float32((finishNano-startNano)/1000000000))
 	conn.Close()
 }
 
@@ -179,11 +147,17 @@ func sendPipeData(pipeNums []int32, rawData []float64) {
 			if dr.PipeNum == pipeNums[0] {
 				data := make([]float64, dr.DataNum+1)
 				interval := len(rawData) / int(dr.DataNum)
-				for i,_ := range data {
-					data[i+1] = rawData[i*interval]
+				var i int
+				for i=1; i<int(dr.DataNum)+1; i++ {
+					data[i] = rawData[(i-1)*interval]
 				}
+
+				//for i,_ := range data {
+				//	data[i+1] = rawData[i*interval]
+				//}
 				data[0] = float64(dr.PipeNum)
 				fmt.Printf("sending to client %d, pipe %d and data %d ...\n", c,  pipeNums, data[0])
+				//dataChan := dr.DataChan
 				dataChan <- data
 			}
 		}
@@ -226,6 +200,7 @@ var registry = map[int]RegistryItem{}
 type DataRequest struct {
 	PipeNum int32
 	DataNum int32
+	//DataChan chan []float64
 }
 
 type RegistryItem struct {
@@ -251,6 +226,10 @@ func registerDataChan(registerId int, dataRequests *[]DataRequest, dataChan chan
 func unregisterDataChan(registerId int) {
 	rItem := registry[registerId]
 	close(rItem.DataChan)
+	//for _, v := range rItem.DataRequests {
+	//	close(v.DataChan)
+	//}
+	//close(rItem.DataChan)
 	delete(registry, registerId)
 }
 
@@ -292,15 +271,22 @@ func serveWs(ws *websocket.Conn) {
 	registerDataChan(registerId, &requestItems, dataChan)
 
 	for {
-		data := <-dataChan
-		datab := *((*[]byte)(unsafe.Pointer(&data)))
-		err := ws.WriteMessage(websocket.BinaryMessage, datab)
-		currentRecord := record[registerId]
-		currentRecord.Rounds = currentRecord.Rounds + 1
-		if err != nil {
-			unregisterDataChan(registerId)
-			break
-		}
+		//for _, v := range requestItems {
+			//dataChan := v.DataChan
+			data := <-dataChan
+			//datab := *((*[]byte)(unsafe.Pointer(&data)))
+			dataBytes := make([]byte, len(data)*8)
+			binary.Write(bytes.NewBuffer(dataBytes),binary.LittleEndian,&data)
+			err := ws.WriteMessage(websocket.BinaryMessage, dataBytes)
+			println("writing to websocket to client", dataBytes)
+			currentRecord := record[registerId]
+			currentRecord.Rounds = currentRecord.Rounds + 1
+			if err != nil {
+				unregisterDataChan(registerId)
+				break
+			}
+		//}
+
 	}
 }
 
@@ -329,11 +315,11 @@ func main() {
 
 	//go readDataRAW("localhost", 2000)
 
-	go readDataNanoMSG("tcp://192.168.9.72:8000")
+	go readDataNanoMSG("tcp://127.0.0.1:8000")
 
 	// Shut down the system in `timeout` seconds
 	go shuttingDown(*timeout)
-	listen("192.168.9.72", *wsport)
+	listen("127.0.0.1", *wsport)
 	time.Sleep(10*time.Second)
 	//stopReceiving()
 	//time.Sleep(1*time.Second)

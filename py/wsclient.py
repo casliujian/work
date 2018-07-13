@@ -45,12 +45,18 @@ async def hello(uri):
         jsonStr = json.dumps(jsonData)
         await websocket.send(jsonStr)
         print("json data sent")
-
-        while True:
-            msg = await websocket.recv()
-            da = array.array('d')
-            da.frombytes(msg)
-            print("received", da)
+        received = 0
+        try:
+            while True:
+                msg = await websocket.recv()
+                print("client received msg", len(msg))
+                received += 1
+                da = array.array('d')
+                da.frombytes(msg)
+                # da.frombytes(msg)
+                print("received", len(da))
+        except:
+            print("exception when receiving data after received ", received, "msg(s)")
 
 
 def startClient(serverIp, serverPort):
@@ -61,4 +67,4 @@ def startClient(serverIp, serverPort):
 if __name__ == "__main__":
     # pipeNum = int(sys.argv[1])
     # dataItemNum = int(sys.argv[2])
-    startClient("192.168.9.72", 1999)
+    startClient("127.0.0.1", 1999)

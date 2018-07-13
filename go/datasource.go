@@ -7,7 +7,6 @@ import (
 	"flag"
 	"bytes"
 	"encoding/binary"
-	"fmt"
 )
 
 func server(url string) {
@@ -54,7 +53,7 @@ func server(url string) {
 
 
 	for {
-		println("data source sending data")
+		//println("data source sending data")
 		var tmpPipeBuf1, tmpPipeBuf2, tmpPipeBuf3, tmpPipeBuf4 bytes.Buffer
 		var tmpDataBuf1, tmpDataBuf2, tmpDataBuf3, tmpDataBuf4 bytes.Buffer
 		//encPipe1 := gob.NewEncoder(&tmpPipeBuf1)
@@ -112,13 +111,16 @@ func server(url string) {
 		buf4.Write(tmpPipeBuf4.Bytes())
 		buf4.Write(tmpDataBuf4.Bytes())
 
-		fmt.Printf("pipebuf1 %x", (tmpPipeBuf1.Bytes()))
-		println("size of databuf1", len(tmpDataBuf1.Bytes()))
-		println("length of buf1", len(buf1.Bytes()))
+		//fmt.Printf("pipebuf1 %x\n", (tmpPipeBuf1.Bytes()))
+		//p1 := make([]int32, 4)
+		//binary.Read(bytes.NewBuffer(tmpPipeBuf1.Bytes()), binary.LittleEndian, p1)
+		//fmt.Printf("pipe1 %v\n", p1)
+		//println("size of databuf1", len(tmpPipeBuf1.Bytes()))
+		//println("length of buf1", len(buf1.Bytes()))
 
 		// Sending every pipe data
 		sock.Send(buf1.Bytes())
-		fmt.Printf("buf1.bytes() %x\n", buf1.Bytes())
+		//fmt.Printf("buf1.bytes() %x\n", buf1.Bytes())
 		sock.Send(buf2.Bytes())
 		sock.Send(buf3.Bytes())
 		sock.Send(buf4.Bytes())
@@ -129,7 +131,7 @@ func server(url string) {
 }
 
 func main() {
-	url := flag.String("url", "tcp://192.168.9.72:8000", "URL of the server")
+	url := flag.String("url", "tcp://127.0.0.1:8000", "URL of the server")
 	flag.Parse()
 	println("now starting server")
 	server(*url)

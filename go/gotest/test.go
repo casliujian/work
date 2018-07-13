@@ -63,4 +63,13 @@ func main() {
 	binary.Write(buffer, binary.LittleEndian, foo)
 	fmt.Println(buffer.Len())
 	fmt.Printf("buffer %x\n", buffer.Bytes())
+
+	//buf := []byte{\x01,\x02,\x03}
+	ia := make([]int32, 2)
+	bufferBytes := buffer.Bytes()
+	//halfByte := make([]byte, 8)
+	//halfByte = buffer.Bytes()[8:16]
+	binary.Read(bytes.NewBuffer(bufferBytes[8:]), binary.LittleEndian, &ia)
+	fmt.Printf("%x\n", buffer.Bytes()[8:])
+	fmt.Printf("ia %v\n", ia)
 }
