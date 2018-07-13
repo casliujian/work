@@ -20,7 +20,8 @@ async def hello(uri):
                     "count": 2000,
                     "startFreq": 100,
                     "stopFreq": 2000
-                },
+                }
+                ,
                 {
                     "pipe": 2,
                     "count": 2000,
@@ -54,10 +55,10 @@ async def hello(uri):
                 # strMsg = msg.decode('utf-8')
                 # print("strMsg:", strMsg)
                 jsonMsg = json.loads(msg)
-                print("client received msg", len(msg))
+                # print("client received msg", len(msg))
                 print("pipe:", jsonMsg['pipe'])
                 print("count:", jsonMsg['count'])
-                print("data:", jsonMsg['data'])
+                # print("data:", jsonMsg['data'])
                 received += 1
                 # da = array.array('d')
                 # da.frombytes(msg)

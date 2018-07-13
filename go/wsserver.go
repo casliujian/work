@@ -140,8 +140,8 @@ func readDataRAW(ip string, port int) {
 }
 
 func sendPipeData(pipeNums []int32, rawData []float64) {
-	println("trying sending from pipe", pipeNums[0])
-	for c, ritem := range registry {
+	//println("trying sending from pipe", pipeNums[0])
+	for _, ritem := range registry {
 		dataRequests, dataChan := ritem.DataRequests, ritem.DataChan
 		for _, dr := range dataRequests {
 			if dr.PipeNum == pipeNums[0] {
@@ -156,7 +156,7 @@ func sendPipeData(pipeNums []int32, rawData []float64) {
 				//	data[i+1] = rawData[i*interval]
 				//}
 				data[0] = float64(dr.PipeNum)
-				fmt.Printf("sending to client %d, pipe %d and data %d ...\n", c,  pipeNums, data[0])
+				//fmt.Printf("sending to client %d, pipe %d and data %d ...\n", c,  pipeNums, data[0])
 				//dataChan := dr.DataChan
 				dataChan <- data
 			}
@@ -183,7 +183,7 @@ func shuttingDown(timelimit int) {
 	stopReceiving()
 	for i, cr := range record {
 		finishTime := time.Now().UnixNano()
-		fmt.Printf("Client %d received %d rounds in %d seconds, speed %f round(s) per second\n", i, cr.Rounds, timelimit, (float32(cr.Rounds) / (float32(finishTime-cr.StartTime) / 1000000000)))
+		fmt.Printf("Client %d received %d rounds in %f seconds, speed %f round(s) per second\n", i, cr.Rounds, (float32(finishTime-cr.StartTime) / 1000000000), (float32(cr.Rounds) / (float32(finishTime-cr.StartTime) / 1000000000)))
 	}
 	os.Exit(1)
 }
@@ -329,7 +329,7 @@ func main() {
 
 	//go readDataRAW("localhost", 2000)
 
-	go readDataNanoMSG("tcp://127.0.0.1:8000")
+	go readDataNanoMSG("ipc://testipc")
 
 	// Shut down the system in `timeout` seconds
 	go shuttingDown(*timeout)

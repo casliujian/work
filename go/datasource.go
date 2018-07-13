@@ -131,7 +131,7 @@ func server(url string) {
 }
 
 func main() {
-	url := flag.String("url", "tcp://127.0.0.1:8000", "URL of the server")
+	url := flag.String("url", "ipc://testipc", "URL of the server")
 	flag.Parse()
 	println("now starting server")
 	server(*url)
