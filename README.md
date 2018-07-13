@@ -1,10 +1,10 @@
 # README
 
-Environments (As far as I know):
+### Environments (As far as I know):
 * `Go` >= 1.9.2
 * `Python` >= 3.6.5
 
-Folders:
+### Folders:
 * `go`: Go source code
     - `datasource.go`: NanoMSG server.
     - `wsserver.go`: The main program, including a NanoMSG client a websocket server.
@@ -12,7 +12,7 @@ Folders:
     - `wsclient.py`: The websocket client, for testing purpose only.
     - `test.py`: The main testing program.
 
-Package Required:
+### Package Required:
 * Go packages:
     - `nanomsg.org/go-mangos`
     - `githum.com/gorilla/websocket`
@@ -21,7 +21,7 @@ Package Required:
     - `asyncio`
     - `websockets`
 
-How to Install Packages:
+### How to Install Packages:
 * Go: 
     
     `go get -u <packagename>`
@@ -29,17 +29,17 @@ How to Install Packages:
     
     `pip3 install <packagename>`
 
-How to RUN:
+### How to RUN:
 
 1. `go run datasource.go -url <URL>`
 2. `go run wsserver.go -nURL <URL>`
 3. `python3 test.py <IP> <PORT> <CLIENTNUMBERS>`
 
-Where is the Result:
+### Where is the Result:
 
 The result is output to the terminal which runs `wsserver.go`.
 
-Data Format Sent to the Websocket Client:
+### Data Format Sent to the Websocket Client:
 
 Each reply from the websocket server to the client has the following format.
 
