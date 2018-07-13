@@ -4,14 +4,6 @@
 * `Go` >= 1.9.2
 * `Python` >= 3.6.5
 
-### Folders:
-* `go`: Go source code
-    - `datasource.go`: NanoMSG server.
-    - `wsserver.go`: The main program, including a NanoMSG client a websocket server.
-* `py`: Python source code
-    - `wsclient.py`: The websocket client, for testing purpose only.
-    - `test.py`: The main testing program.
-
 ### Package Required:
 * Go packages:
     - `nanomsg.org/go-mangos`
@@ -28,6 +20,16 @@
 * Python: 
     
     `pip3 install <packagename>`
+
+### Folders:
+* `go`: Go source code
+    - `datasource.go`: NanoMSG server.
+    - `wsserver.go`: The main program, including a NanoMSG client a websocket server.
+* `py`: Python source code
+    - `wsclient.py`: The websocket client, for testing purpose only.
+    - `test.py`: The main testing program.
+    - `datasource.py`: A TCP server, which serves as one of the data source of the main program. This file is also for testing purpose only.
+
 
 ### How to RUN:
 
