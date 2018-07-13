@@ -7,15 +7,16 @@ import (
 	"fmt"
 	"github.com/gorilla/websocket"
 	"io"
+	"nanomsg.org/go-mangos"
+	"nanomsg.org/go-mangos/protocol/sub"
+	"nanomsg.org/go-mangos/transport/ipc"
+	"nanomsg.org/go-mangos/transport/tcp"
 	"net"
 	"net/http"
 	"os"
 	"strconv"
 	"time"
-	"nanomsg.org/go-mangos/protocol/sub"
-	"nanomsg.org/go-mangos/transport/ipc"
-	"nanomsg.org/go-mangos/transport/tcp"
-	"nanomsg.org/go-mangos"
+	"github.com/json-iterator/go"
 )
 
 var intsize = 4
@@ -49,33 +50,15 @@ func readDataNanoMSG(url string) {
 			println("error when receiving pipe number from NanoMSG")
 			return
 		}
-		//println("size of msg:", len(msg))
-
-		PipeNums := make([]int32, intnumber)
-		//pipeReader := bytes.NewBuffer(msg[0:15])
-		//binary.Read(pipeReader, binary.LittleEndian, &PipeNums)
+		PipeNums1 := make([]int32, intnumber)
+		pipeReader1 := bytes.NewBuffer(msg[0:16])
+		binary.Read(pipeReader1, binary.LittleEndian, &PipeNums1)
 		//
-		Datas := make([]float64, floatnumber)
-		//dataReader := bytes.NewBuffer(msg[16:])
-		//binary.Read(dataReader, binary.LittleEndian, &Datas)
+		Datas1 := make([]float64, floatnumber)
+		dataReader1 := bytes.NewBuffer(msg[16:])
+		binary.Read(dataReader1, binary.LittleEndian, &Datas1)
 
-		var pipeNum int32
-		var data float64
-		var i int
-		for i = 0; i<intnumber; i++ {
-			binary.Read(bytes.NewBuffer(msg[i*4:(i+1)*4]),binary.LittleEndian,&pipeNum)
-			PipeNums[i] = pipeNum
-		}
-		for i=0; i<floatnumber; i++ {
-			binary.Read(bytes.NewBuffer(msg[16+i*8:16+(i+1)*8]),binary.LittleEndian,&data)
-			Datas[i] = data
-		}
-
-
-		//fmt.Printf("raw pipenums1 %x\n", msg[0:15])
-		//fmt.Printf("pipeinfo %v\n", PipeNums)
-		//fmt.Printf("PipeNums[0] %d\n", pipeNum)
-		sendPipeData(PipeNums[:], Datas[:])
+		sendPipeData(&(PipeNums1), &(Datas1))
 
 	}
 
@@ -129,7 +112,7 @@ func readDataRAW(ip string, port int) {
 		datas := make([]float64, floatnumber)
 		dataReader := bytes.NewBuffer(databuf)
 		binary.Read(dataReader, binary.LittleEndian, &datas)
-		sendPipeData(pipeNums, datas)
+		sendPipeData(&pipeNums, &datas)
 
 		sockround = sockround + 1
 	}
@@ -139,38 +122,23 @@ func readDataRAW(ip string, port int) {
 	conn.Close()
 }
 
-func sendPipeData(pipeNums []int32, rawData []float64) {
+func sendPipeData(pipeNumsP *[]int32, rawDataP *[]float64) {
+	pipeNums := *pipeNumsP
+	rawData := *rawDataP
 	//println("trying sending from pipe", pipeNums[0])
 	for _, ritem := range registry {
 		dataRequests, dataChan := ritem.DataRequests, ritem.DataChan
 		for _, dr := range dataRequests {
 			if dr.PipeNum == pipeNums[0] {
-				data := make([]float64, dr.DataNum+1)
+				data := make([]float64, dr.DataNum)
 				interval := len(rawData) / int(dr.DataNum)
 				var i int
-				for i=1; i<int(dr.DataNum)+1; i++ {
-					data[i] = rawData[(i-1)*interval]
+				for i = 0; i < int(dr.DataNum); i++ {
+					data[i] = rawData[(i)*interval]
 				}
-
-				//for i,_ := range data {
-				//	data[i+1] = rawData[i*interval]
-				//}
-				data[0] = float64(dr.PipeNum)
-				//fmt.Printf("sending to client %d, pipe %d and data %d ...\n", c,  pipeNums, data[0])
-				//dataChan := dr.DataChan
-				dataChan <- data
+				dataChan <- DataItemInfo{dr.PipeNum, dr.DataNum, &data}
 			}
 		}
-
-		//
-		//if ritem.PipeNum == pipeNums[0] {
-		//	data := make([]float64, ritem.DataNum)
-		//	interval := len(rawData) / int(ritem.DataNum)
-		//	for i, _ := range data {
-		//		data[i] = rawData[i*interval]
-		//	}
-		//	ritem.DataChan <- data
-		//}
 	}
 }
 
@@ -179,11 +147,21 @@ func stopReceiving() {
 }
 
 func shuttingDown(timelimit int) {
+	if timelimit == 0 {
+		return
+	}
 	time.Sleep(time.Duration(timelimit) * time.Second)
 	stopReceiving()
 	for i, cr := range record {
 		finishTime := time.Now().UnixNano()
-		fmt.Printf("Client %d received %d rounds in %f seconds, speed %f round(s) per second\n", i, cr.Rounds, (float32(finishTime-cr.StartTime) / 1000000000), (float32(cr.Rounds) / (float32(finishTime-cr.StartTime) / 1000000000)))
+		print("Sending to client ", i, " has speed [")
+		timeInterval := (float32(finishTime-cr.StartTime) / 1000000000)
+		for k,v := range cr.Rounds {
+			fmt.Printf("pipe %d : %f rounds/s ",k, float32(v)/timeInterval)
+		}
+		println("]")
+
+		//fmt.Printf("Client %d received %d rounds in %f seconds, speed %f round(s) per second\n", i, cr.Rounds, (float32(finishTime-cr.StartTime) / 1000000000), (float32(cr.Rounds) / (float32(finishTime-cr.StartTime) / 1000000000)))
 	}
 	os.Exit(1)
 }
@@ -191,8 +169,17 @@ func shuttingDown(timelimit int) {
 var record = map[int]*ClientRecord{}
 
 type ClientRecord struct {
-	Rounds    int
+	Rounds    map[int32]int
 	StartTime int64
+}
+
+func addClientRecordRound(cr *ClientRecord, pipe int32) {
+	_, exists := cr.Rounds[pipe]
+	if exists == true {
+		cr.Rounds[pipe] += 1
+	} else {
+		cr.Rounds[pipe] = 1
+	}
 }
 
 var registry = map[int]RegistryItem{}
@@ -200,12 +187,17 @@ var registry = map[int]RegistryItem{}
 type DataRequest struct {
 	PipeNum int32
 	DataNum int32
-	//DataChan chan []float64
+}
+
+type DataItemInfo struct {
+	PipeInfo int32
+	CountInfo int32
+	Data *[]float64
 }
 
 type RegistryItem struct {
 	DataRequests []DataRequest
-	DataChan chan []float64
+	DataChan     chan DataItemInfo
 }
 
 var rid = 0
@@ -215,10 +207,11 @@ func newRid() int {
 	return rid
 }
 
-func registerDataChan(registerId int, dataRequests *[]DataRequest, dataChan chan []float64) {
+func registerDataChan(registerId int, dataRequests *[]DataRequest, dataChan chan DataItemInfo) {
 	registry[registerId] = RegistryItem{DataRequests: *dataRequests, DataChan: dataChan}
 	newClientRecord := new(ClientRecord)
-	newClientRecord.Rounds = 0
+	//newClientRecord.Rounds = 0
+	newClientRecord.Rounds = map[int32]int{}
 	newClientRecord.StartTime = time.Now().UnixNano()
 	record[registerId] = newClientRecord
 }
@@ -226,10 +219,6 @@ func registerDataChan(registerId int, dataRequests *[]DataRequest, dataChan chan
 func unregisterDataChan(registerId int) {
 	rItem := registry[registerId]
 	close(rItem.DataChan)
-	//for _, v := range rItem.DataRequests {
-	//	close(v.DataChan)
-	//}
-	//close(rItem.DataChan)
 	delete(registry, registerId)
 }
 
@@ -239,24 +228,21 @@ var upgrader = websocket.Upgrader{
 }
 
 type Subscribe struct {
-	Pipe 		int32 `json:"pipe"`
-	Count 		int32 `json:"count"`
-	StartFreq 	int32 `json:"startFreq"`
-	StopFreq	int32 `json:"stopFreq"`
+	Pipe      int32 `json:"pipe"`
+	Count     int32 `json:"count"`
+	StartFreq int32 `json:"startFreq"`
+	StopFreq  int32 `json:"stopFreq"`
 }
 
 type RequestJSON struct {
-	ServerIP string `json:"serverIP"`
+	ServerIP  string      `json:"serverIP"`
 	Subscribe []Subscribe `json:"subscribe"`
-
-	//PipeNum     int32 `json:"pipeNum"`
-	//DataItemNum int32 `json:"dataItemNum"`
 }
 
 type ResponseJSON struct {
-	PipeNum int32 `json:"pipe"`
-	Count int32 `json:"count"`
-	Data []float64 `json:"data"`
+	PipeNum int32     `json:"pipe"`
+	Count   int32     `json:"count"`
+	Data    []float64 `json:"data"`
 }
 
 func serveWs(ws *websocket.Conn) {
@@ -264,56 +250,45 @@ func serveWs(ws *websocket.Conn) {
 	ws.ReadJSON(request)
 	//println(jsonData.DataItemNum)
 	requestItems := make([]DataRequest, len(request.Subscribe))
-	for i,subs := range request.Subscribe {
-		requestItems[i] = DataRequest{PipeNum:subs.Pipe, DataNum:subs.Count}
+	for i, subs := range request.Subscribe {
+		requestItems[i] = DataRequest{PipeNum: subs.Pipe, DataNum: subs.Count}
 		fmt.Printf("client request pipe %d for %d data items\n", subs.Pipe, subs.Count)
 	}
-
-	//fmt.Printf("client request pipe %d for %d data items\n", request.PipeNum, jsonData.DataItemNum)
-
 	// Make a new channel to fetch data to be sent for each client
-	dataChan := make(chan []float64)
+	dataChan := make(chan DataItemInfo, 10)
 	registerId := newRid()
 	registerDataChan(registerId, &requestItems, dataChan)
 
 	for {
-		//for _, v := range requestItems {
-			//dataChan := v.DataChan
-			data := <-dataChan
-			//datab := *((*[]byte)(unsafe.Pointer(&data)))
-			var responseData = ResponseJSON{}
-			responseData.PipeNum = int32(data[0])
-			responseData.Count = int32(len(data[1:]))
-			responseData.Data = data[1:]
-			//response,_ := json.Marshal(responseData)
+		data := <-dataChan
+		var responseData = ResponseJSON{}
+		responseData.PipeNum = data.PipeInfo
+		responseData.Count = data.CountInfo
+		responseData.Data = *(data.Data)
 
+		json := jsoniter.ConfigCompatibleWithStandardLibrary
+		datab, err := json.Marshal(&responseData)
+		ws.WriteMessage(websocket.BinaryMessage, datab)
 
-			//dataBytes := make([]byte, len(data)*8)
-			//binary.Write(bytes.NewBuffer(dataBytes), binary.LittleEndian, &data)
-			err := ws.WriteJSON(responseData)
-			//err := ws.WriteMessage(websocket., response)
-			//println("writing to websocket to client", responseData)
-			currentRecord := record[registerId]
-			currentRecord.Rounds = currentRecord.Rounds + 1
-			if err != nil {
-				unregisterDataChan(registerId)
-				break
-			}
-		//}
+		currentRecord := record[registerId]
+		addClientRecordRound(currentRecord, data.PipeInfo)
+		if err != nil {
+			unregisterDataChan(registerId)
+			ws.Close()
+			break
+		}
 
 	}
 }
 
 func serveHttp(w http.ResponseWriter, r *http.Request) {
-	println("a http connection established")
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		println("error when handling http request")
 		return
 	}
-	defer ws.Close()
-	println("a websocket connection established")
-	serveWs(ws)
+	//defer ws.Close()
+	go serveWs(ws)
 }
 
 func listen(ip string, port int) {
@@ -323,18 +298,22 @@ func listen(ip string, port int) {
 }
 
 func main() {
+	nanoUrl := flag.String("nURL", "tcp://127.0.0.1:8080", "URL for connecting NanoMSG, in the form of either \"tcp://\" or \"ipc://\"")
 	wsport := flag.Int("port", 1999, "Websocket server listening port")
 	timeout := flag.Int("timeout", 30, "Timeout for testing purpose (seconds)")
 	flag.Parse()
 
-	//go readDataRAW("localhost", 2000)
+	// Fetch data from raw tcp socket
+	//go readDataRAW("192.168.9.72", 2000)
 
-	go readDataNanoMSG("ipc://testipc")
+	// Fetch data from NanoMSG
+	go readDataNanoMSG(*nanoUrl)
 
 	// Shut down the system in `timeout` seconds
 	go shuttingDown(*timeout)
-	listen("127.0.0.1", *wsport)
-	time.Sleep(10*time.Second)
-	//stopReceiving()
-	//time.Sleep(1*time.Second)
+	listen("", *wsport)
+
+	// Don't remove this, otherwise the program fails
+	time.Sleep(10 * time.Second)
+
 }

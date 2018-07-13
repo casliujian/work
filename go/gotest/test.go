@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"unsafe"
 )
 
 var testmap = map[int]TestStruct{}
@@ -12,64 +13,30 @@ type TestStruct struct {
 	Item2 string
 }
 
+
 func main() {
-	//testmap[1] = TestStruct{1, "2"}
-	//ts := (testmap[1])
-	//ts.Item1 = 3
-	//println(testmap[1].Item1)
-	//println(testmap[1].Item2)
-	//ia := []int32{1,2,3,4}
-	//ifl := []float64{1.1,2.2,3.3}
-	//var i int32
-	//i = 20
-	////iab := *((*[]byte)(unsafe.Pointer(&ia)))
-	////iab := make([]byte, 12)
-	//buf := new(bytes.Buffer)
-	//iab := *((*[]byte)(unsafe.Pointer(&ia)))
-	//bufW := bufio.NewWriter(buf)
-	//binary.Write(bufW, binary.LittleEndian, i)
-	//
-	//buf2 := new(bytes.Buffer)
-	//enc := gob.NewEncoder(buf2)
-	//dec := gob.NewDecoder(buf2)
-	//enc.Encode(ia)
-	////enc.Encode(ia)
-	//var ia2 []int32
-	//dec.Decode(&ia2)
-	//
-	//buf3 := new(bytes.Buffer)
-	//encf := gob.NewEncoder(buf3)
-	////decf := gob.NewDecoder(buf3)
-	//encf.Encode(ifl)
-	//
-	////enc.Encode(ia)
-	//
-	//buf4 := new(bytes.Buffer)
-	//buf4.Write(buf2.Bytes())
-	//buf4.Write(buf3.Bytes())
-	//decall := gob.NewDecoder(buf4)
-	//var all []float64
-	//decall.Decode(&all)
-	//
-	//fmt.Printf("array %d\n", i)
-	//fmt.Printf("bytes %v\n", iab)
-	//fmt.Printf("buf %x\n", buf.Bytes())
-	//fmt.Printf("buf2 %x, and length is %d\n", buf2.Bytes(), len(buf2.Bytes()))
-	//fmt.Printf("dec of buf2 %v\n", ia2)
-	//fmt.Printf("all data %v\n", all)
-	//var foo []int32
 	foo := []int32{1,2,3,4}
 	buffer := new(bytes.Buffer)
 	binary.Write(buffer, binary.LittleEndian, foo)
 	fmt.Println(buffer.Len())
 	fmt.Printf("buffer %x\n", buffer.Bytes())
 
-	//buf := []byte{\x01,\x02,\x03}
-	ia := make([]int32, 2)
-	bufferBytes := buffer.Bytes()
-	//halfByte := make([]byte, 8)
-	//halfByte = buffer.Bytes()[8:16]
-	binary.Read(bytes.NewBuffer(bufferBytes[8:]), binary.LittleEndian, &ia)
-	fmt.Printf("%x\n", buffer.Bytes()[8:])
-	fmt.Printf("ia %v\n", ia)
+	da := []float64{0.1,0.2,0.3,0.4}
+	dab1 := new(bytes.Buffer)
+	binary.Write(dab1, binary.LittleEndian, da)
+	fmt.Printf("dab1 %x\n", dab1.Bytes())
+
+	var dab2 =make([]byte,1000,1000)
+
+	dab2 = *((*[]byte)(unsafe.Pointer(&(da))))
+	dab3 := *((*[]byte)(unsafe.Pointer(&(da[1:]))))
+	dab4 := *((*[]byte)(unsafe.Pointer(&(da[2:]))))
+	dab5 := *((*[]byte)(unsafe.Pointer(&(da[3:]))))
+	fmt.Printf("dab2 %x\n", dab2)
+	fmt.Printf("dab3 %x\n", dab3)
+	fmt.Printf("dab4 %x\n", dab4)
+	fmt.Printf("dab5 %x\n", dab5)
+
+	//fmt.Printf("%x\n", [8]byte(3.2))
+
 }
