@@ -49,12 +49,20 @@ async def hello(uri):
         try:
             while True:
                 msg = await websocket.recv()
+                # jsonmsg = ""
+                print("type of msg:", type(msg))
+                # strMsg = msg.decode('utf-8')
+                # print("strMsg:", strMsg)
+                jsonMsg = json.loads(msg)
                 print("client received msg", len(msg))
+                print("pipe:", jsonMsg['pipe'])
+                print("count:", jsonMsg['count'])
+                print("data:", jsonMsg['data'])
                 received += 1
-                da = array.array('d')
-                da.frombytes(msg)
+                # da = array.array('d')
                 # da.frombytes(msg)
-                print("received", len(da))
+                # da.frombytes(msg)
+                # print("received", len(da))
         except:
             print("exception when receiving data after received ", received, "msg(s)")
 

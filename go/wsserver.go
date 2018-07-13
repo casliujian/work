@@ -253,6 +253,12 @@ type RequestJSON struct {
 	//DataItemNum int32 `json:"dataItemNum"`
 }
 
+type ResponseJSON struct {
+	PipeNum int32 `json:"pipe"`
+	Count int32 `json:"count"`
+	Data []float64 `json:"data"`
+}
+
 func serveWs(ws *websocket.Conn) {
 	request := &RequestJSON{}
 	ws.ReadJSON(request)
@@ -275,10 +281,18 @@ func serveWs(ws *websocket.Conn) {
 			//dataChan := v.DataChan
 			data := <-dataChan
 			//datab := *((*[]byte)(unsafe.Pointer(&data)))
-			dataBytes := make([]byte, len(data)*8)
-			binary.Write(bytes.NewBuffer(dataBytes),binary.LittleEndian,&data)
-			err := ws.WriteMessage(websocket.BinaryMessage, dataBytes)
-			println("writing to websocket to client", dataBytes)
+			var responseData = ResponseJSON{}
+			responseData.PipeNum = int32(data[0])
+			responseData.Count = int32(len(data[1:]))
+			responseData.Data = data[1:]
+			//response,_ := json.Marshal(responseData)
+
+
+			//dataBytes := make([]byte, len(data)*8)
+			//binary.Write(bytes.NewBuffer(dataBytes), binary.LittleEndian, &data)
+			err := ws.WriteJSON(responseData)
+			//err := ws.WriteMessage(websocket., response)
+			//println("writing to websocket to client", responseData)
 			currentRecord := record[registerId]
 			currentRecord.Rounds = currentRecord.Rounds + 1
 			if err != nil {
