@@ -65,8 +65,8 @@ func readDataNanoMSG(url string) {
 }
 
 // Read data from raw tcp socket
-func readDataRAW(ip string, port int) {
-	addr := ip + ":" + strconv.Itoa(port)
+func readDataRAW(url string) {
+	addr := url
 	conn, err := net.Dial("tcp", addr)
 	if err != nil {
 		println("connection to data source failed")
@@ -298,7 +298,8 @@ func listen(ip string, port int) {
 }
 
 func main() {
-	nanoUrl := flag.String("nURL", "tcp://127.0.0.1:8080", "URL for connecting NanoMSG, in the form of either \"tcp://\" or \"ipc://\"")
+	usingNano := flag.Bool("nano", true, "Whether using NanoMSG or not")
+	url := flag.String("url", "tcp://127.0.0.1:8080", "URL for connecting NanoMSG, in the form of either \"tcp://\" or \"ipc://\"")
 	wsport := flag.Int("port", 1999, "Websocket server listening port")
 	timeout := flag.Int("timeout", 30, "Timeout for testing purpose (seconds)")
 	flag.Parse()
@@ -307,7 +308,13 @@ func main() {
 	//go readDataRAW("192.168.9.72", 2000)
 
 	// Fetch data from NanoMSG
-	go readDataNanoMSG(*nanoUrl)
+	if *usingNano == true {
+		go readDataNanoMSG(*url)
+	} else {
+		go readDataRAW(*url)
+	}
+
+	//go readDataNanoMSG(*nanoUrl)
 
 	// Shut down the system in `timeout` seconds
 	go shuttingDown(*timeout)

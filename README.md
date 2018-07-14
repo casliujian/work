@@ -33,8 +33,8 @@
 
 ### How to RUN:
 
-1. `go run datasource.go -url <URL>`
-2. `go run wsserver.go -nURL <URL>`
+1. `go run datasource.go -url=<URL>`
+2. `go run wsserver.go -nano=<true/false> -url=<URL>`
 3. `python3 test.py <IP> <PORT> <CLIENTNUMBERS>`
 
 ### Where is the Result:

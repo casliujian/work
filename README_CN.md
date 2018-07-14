@@ -34,8 +34,8 @@
 
 ### 如何运行程序:
 
-1. `go run datasource.go -url <URL>`
-2. `go run wsserver.go -nURL <URL>`
+1. `go run datasource.go -url=<URL>`
+2. `go run wsserver.go -nano=<true/false> -url=<URL>`
 3. `python3 test.py <IP> <PORT> <CLIENTNUMBERS>`
 
 ### 怎样查看程序运行结果:

@@ -39,10 +39,10 @@ func server(url string) {
 	}
 
 	for i, _ := range data1 {
-		data1[i] = float64(i)+0.000001
-		data2[i] = float64(i)+0.000002
-		data3[i] = float64(i)+0.000003
-		data4[i] = float64(i)+0.000004
+		data1[i] = float64(i)+0.1
+		data2[i] = float64(i)+0.2
+		data3[i] = float64(i)+0.3
+		data4[i] = float64(i)+0.4
 	}
 	var tmpPipeBuf1, tmpPipeBuf2, tmpPipeBuf3, tmpPipeBuf4 bytes.Buffer
 	var tmpDataBuf1, tmpDataBuf2, tmpDataBuf3, tmpDataBuf4 bytes.Buffer
