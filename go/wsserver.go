@@ -1,21 +1,19 @@
 package main
 
 import (
-	"bytes"
-	"encoding/binary"
-	"flag"
-	"fmt"
-	"github.com/gorilla/websocket"
-	"io"
-	"nanomsg.org/go-mangos"
 	"nanomsg.org/go-mangos/protocol/sub"
 	"nanomsg.org/go-mangos/transport/ipc"
 	"nanomsg.org/go-mangos/transport/tcp"
-	"net"
-	"net/http"
-	"os"
-	"strconv"
+	"encoding/binary"
+	"nanomsg.org/go-mangos"
+	"bytes"
 	"time"
+	"fmt"
+	"os"
+	"github.com/gorilla/websocket"
+	"net/http"
+	"strconv"
+	"flag"
 	"github.com/json-iterator/go"
 )
 
@@ -26,8 +24,23 @@ var floatnumber = 65536
 var bigendian = false
 var keepReceiving = true
 
+
+
 // Read data from NanoMSG
-func readDataNanoMSG(url string) {
+/*
+消息格式：
+	消息类型	uint		4字节
+	消息类型	uint		4字节
+	通道号		uint		4字节
+	时间		long		8字节
+	最低频率	double		8字节
+	最高频率	double		8字节
+	数据区		[]floag32	4*字节
+
+msgType为115时检索宽带频谱数据
+msgType为116时检索高分辨频谱数据
+*/
+func readDataNanoMSG(url string, msgType uint32) {
 	sock, err := sub.NewSocket()
 	if err != nil {
 		println("NanoMSG client cannot make a socket")
@@ -39,6 +52,8 @@ func readDataNanoMSG(url string) {
 		println("NanoMSG client cannot connect to server via socket")
 		return
 	}
+	msgTypeb := make([]byte, 4)
+	binary.LittleEndian.PutUint32(msgTypeb, msgType)
 	if err = sock.SetOption(mangos.OptionSubscribe, []byte("")); err != nil {
 		println("NanoMSG client cannot subscribe topics")
 		return
@@ -50,93 +65,238 @@ func readDataNanoMSG(url string) {
 			println("error when receiving pipe number from NanoMSG")
 			return
 		}
-		PipeNums1 := make([]int32, intnumber)
-		pipeReader1 := bytes.NewBuffer(msg[0:16])
-		binary.Read(pipeReader1, binary.LittleEndian, &PipeNums1)
+
+		//println("ws server received from NanoMSG length:", len(msg))
+		var msgTypeReceived = msgTypeOfMsg(&msg)
+		var pipe = pipeOfMsg(&msg)
+		var time = timeOfMsg(&msg)
+		var lowFreq = lowFreqOfMsg(&msg)
+		var highFreq = highFreqOfMsg(&msg)
+		var data = dataOfMsg(&msg)
+
+		fmt.Printf("Data received from NanoMSG: msgType: %d, pipe %d, time %d, lowFreq %f, highFreq %f, data %d\n", msgTypeReceived, pipe, time, lowFreq, highFreq, len(*data))
+
+		if msgTypeReceived := msgTypeOfMsg(&msg); msgTypeReceived == msgType {
+			sendPipeData(msgTypeReceived, pipeOfMsg(&msg), timeOfMsg(&msg), lowFreqOfMsg(&msg), highFreqOfMsg(&msg), dataOfMsg(&msg))
+		}
+
+		//var msgTypeReceived uint32 = 0
+		//var pipe uint32 = 0
+		//var time uint64 = 0
+		//var lowFreq float64 = 0
+		//var highFreq float64 = 0
+		//var data = make([]float32, len(msg[36:])/4)
 		//
-		Datas1 := make([]float64, floatnumber)
-		dataReader1 := bytes.NewBuffer(msg[16:])
-		binary.Read(dataReader1, binary.LittleEndian, &Datas1)
-
-		sendPipeData(&(PipeNums1), &(Datas1))
-
+		//binary.Read(bytes.NewBuffer(msg[0:4]), binary.LittleEndian, &msgTypeReceived)
+		//if msgTypeReceived == msgType {
+		//	binary.Read(bytes.NewBuffer(msg[8:12]), binary.LittleEndian, &pipe)
+		//	binary.Read(bytes.NewBuffer(msg[12:20]), binary.LittleEndian, &time)
+		//	binary.Read(bytes.NewBuffer(msg[20:28]), binary.LittleEndian, &lowFreq)
+		//	binary.Read(bytes.NewBuffer(msg[28:36]), binary.LittleEndian, &highFreq)
+		//	binary.Read(bytes.NewBuffer(msg[36:]), binary.LittleEndian, &data)
+		//
+		//	//fmt.Printf("Data received from NanoMSG: msgType: %d, pipe %d, time %d, lowFreq %f, highFreq %f, data %d\n", msgTypeReceived, pipe, time, lowFreq, highFreq, len(data))
+		//
+		//	sendPipeData(msgTypeReceived, pipe, time, lowFreq, highFreq, &data)
+		//}
 	}
 
 }
 
-// Read data from raw tcp socket
-func readDataRAW(url string) {
-	addr := url
-	conn, err := net.Dial("tcp", addr)
-	if err != nil {
-		println("connection to data source failed")
-		return
-	}
-	println("connected to " + addr)
-	sockround := 0
-	startNano := time.Now().UnixNano()
-	for keepReceiving {
-		// Receiving pipe number
-		pipebufLen := intsize * intnumber
-		pipebuf := make([]byte, pipebufLen)
-		receivedPipebufLen := 0
-		for receivedPipebufLen < pipebufLen {
-			n, err := conn.Read(pipebuf[receivedPipebufLen:])
-			if err != nil && err != io.EOF {
-				println("read pipe number error")
-				conn.Close()
-				return
-			}
-			receivedPipebufLen = receivedPipebufLen + n
-		}
-		// Receiving real data
-		databufLen := floatsize * floatnumber
-		databuf := make([]byte, databufLen)
-		receivedDatabufLen := 0
-		for receivedDatabufLen < databufLen {
-			n, err := conn.Read(databuf[receivedDatabufLen:])
-			if err != nil && err != io.EOF {
-				println("read data error")
-				conn.Close()
-				return
-			}
-			receivedDatabufLen = receivedDatabufLen + n
-		}
-
-		// Send the corresponding data to each client
-		// The safe way, may be not very efficient, and may be further improved
-		pipeNums := make([]int32, intnumber)
-		pipeNumReader := bytes.NewBuffer(pipebuf)
-		binary.Read(pipeNumReader, binary.LittleEndian, &pipeNums)
-
-		datas := make([]float64, floatnumber)
-		dataReader := bytes.NewBuffer(databuf)
-		binary.Read(dataReader, binary.LittleEndian, &datas)
-		sendPipeData(&pipeNums, &datas)
-
-		sockround = sockround + 1
-	}
-	println("end receiving loop")
-	finishNano := time.Now().UnixNano()
-	fmt.Printf("%f round(s) per second\n", float32(sockround)/float32((finishNano-startNano)/1000000000))
-	conn.Close()
+func msgTypeOfMsg(msgp *[]byte) uint32 {
+	msg := *msgp
+	var msgTypeReceived uint32 = 0
+	binary.Read(bytes.NewBuffer(msg[0:4]), binary.LittleEndian, &msgTypeReceived)
+	return msgTypeReceived
 }
 
-func sendPipeData(pipeNumsP *[]int32, rawDataP *[]float64) {
-	pipeNums := *pipeNumsP
-	rawData := *rawDataP
-	//println("trying sending from pipe", pipeNums[0])
-	for _, ritem := range registry {
-		dataRequests, dataChan := ritem.DataRequests, ritem.DataChan
-		for _, dr := range dataRequests {
-			if dr.PipeNum == pipeNums[0] {
-				data := make([]float64, dr.DataNum)
-				interval := len(rawData) / int(dr.DataNum)
-				var i int
-				for i = 0; i < int(dr.DataNum); i++ {
-					data[i] = rawData[(i)*interval]
+func pipeOfMsg(msgp *[]byte) uint32 {
+	msg := *msgp
+	var pipe uint32 = 0
+	binary.Read(bytes.NewBuffer(msg[8:12]), binary.LittleEndian, &pipe)
+	return pipe
+}
+
+func timeOfMsg(msgp *[]byte) uint64 {
+	msg := *msgp
+	var time uint64 = 0
+	binary.Read(bytes.NewBuffer(msg[12:20]), binary.LittleEndian, &time)
+	return time
+}
+
+func lowFreqOfMsg(msgp *[]byte) float64 {
+	msg := *msgp
+	var lowFreq float64 = 0
+	binary.Read(bytes.NewBuffer(msg[20:28]), binary.LittleEndian, &lowFreq)
+	return lowFreq
+}
+
+func highFreqOfMsg(msgp *[]byte) float64 {
+	msg := *msgp
+	var highFreq float64 = 0
+	binary.Read(bytes.NewBuffer(msg[28:36]), binary.LittleEndian, &highFreq)
+	return highFreq
+}
+
+func dataOfMsg(msgp *[]byte) *[]float32 {
+	msg := *msgp
+	var data = make([]float32, len(msg[36:])/4)
+	binary.Read(bytes.NewBuffer(msg[36:]), binary.LittleEndian, &data)
+	return &data
+}
+
+// 发送三份数据：实时数据(msgType: 11s)、历史最低数据(msgType: 12)、历史最高数据(msgType: 13)，每份数据格式一样
+func sendPipeData(msgType uint32, pipe uint32, time uint64, lowFreq float64, highFreq float64, data *[]float32) {
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+	for rid, cr := range clientRequests {
+		for _, sub := range cr.Subs {
+			//println(sub.Pipe, uint32(sub.Pipe))
+			if pipe == uint32(sub.Pipe) {
+				// println("prepare to add a data to channel of client", rid)
+				// 根据请求的startFreq和stopFreq以及通道的startFreq和stopFreq来计算返回的数据的长度
+
+				dataLen := len(*data)
+				dataIndexStart := int((sub.StartFreq - lowFreq)/(highFreq-lowFreq)*float64(dataLen))
+				dataIndexStop := int((sub.StopFreq - lowFreq)/(highFreq-lowFreq)*float64(dataLen))
+
+				var dataCount = dataIndexStop - dataIndexStart
+
+				var dataX, dataY []float32
+				var actualDataCount int
+				if dataCount < sub.Count {
+					// 请求的数据量大于实际的数据量
+					actualDataCount = dataCount
+					dataX = make([]float32, dataCount)
+					dataY = make([]float32, dataCount)
+					var i int
+					for i=0; i<dataCount; i++ {
+						dataX[i] = float32(sub.StartFreq) + float32(float32(i)/float32(dataLen)) * float32(highFreq - lowFreq)
+						//dataY[i] =
+					}
+					dataY = (*data)[dataIndexStart:dataIndexStop]
+				} else {
+					// 请求的数据量小于实际的数据量，此时需要取样
+					actualDataCount = sub.Count
+					dataX = make([]float32, sub.Count)
+					dataY = make([]float32, sub.Count)
+					interval := dataCount/sub.Count
+					var i int
+					for i=0; i<sub.Count; i++ {
+						dataX[i] = float32(sub.StartFreq) + float32(float32(i*interval)/float32(dataLen)) * float32(highFreq - lowFreq)
+						dataY[i] = (*data)[dataIndexStart+i*interval]
+						//dataY[i] = float32(lowFreq) + float32(i)*(float32(highFreq - lowFreq))/float32(dataLen)
+					}
 				}
-				dataChan <- DataItemInfo{dr.PipeNum, dr.DataNum, &data}
+
+				dataXY := DataInfo{TimeStamp:"", DataX:dataX, DataY:dataY}
+				responseData := ResponseData{MsgType:11, Data:dataXY, Warning:"", PlaybackIndex:0}
+				responseDatab, _ := json.Marshal(&responseData)
+				select {
+				case clientRequests[rid].DataChannel <- responseDatab:
+				default:
+				}
+
+				minDataY, maxDataY := updateMinmaxDataRecord(minmaxData, int(pipe), actualDataCount, dataY)
+				if minDataY != nil {
+					minDataXY := DataInfo{TimeStamp:"", DataX:dataX, DataY:minDataY}
+					minResponseData := ResponseData{MsgType:12, Data:minDataXY, Warning:""}
+					minResponseDatab,_ := json.Marshal(&minResponseData)
+					select {
+					case clientRequests[rid].DataChannel <- minResponseDatab:
+					default:
+					}
+
+				}
+				if maxDataY != nil {
+					maxDataXY := DataInfo{TimeStamp:"", DataX:dataX, DataY:maxDataY}
+					maxResponseData := ResponseData{MsgType:13, Data:maxDataXY, Warning:"", PlaybackIndex:0}
+					maxResponseDatab,_ := json.Marshal(&maxResponseData)
+					select {
+					case clientRequests[rid].DataChannel <- maxResponseDatab:
+					default:
+					}
+
+				}
+
+				// println("added a data to channel of client", rid)
+			}
+		}
+	}
+}
+
+// 回放：发送三份数据：实时数据(msgType: 11s)、历史最低数据(msgType: 12)、历史最高数据(msgType: 13)，每份数据格式一样
+func sendPlaybackData(msgType uint32, pipe uint32, time uint64, lowFreq float64, highFreq float64, data *[]float32, playbackIndex int) {
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+	for rid, prs := range playbackRecords {
+		for _, pr := range prs {
+			//println(sub.Pipe, uint32(sub.Pipe))
+			if pipe == uint32(pr.Pipe) {
+				// println("prepare to add a data to channel of client", rid)
+				// 根据请求的startFreq和stopFreq以及通道的startFreq和stopFreq来计算返回的数据的长度
+
+				dataLen := len(*data)
+				dataIndexStart := int((pr.StartFreq - lowFreq)/(highFreq-lowFreq)*float64(dataLen))
+				dataIndexStop := int((pr.StopFreq - lowFreq)/(highFreq-lowFreq)*float64(dataLen))
+
+				var dataCount = dataIndexStop - dataIndexStart
+
+				var dataX, dataY []float32
+				var actualDataCount int
+				if dataCount < pr.Count {
+					// 请求的数据量大于实际的数据量
+					actualDataCount = dataCount
+					dataX = make([]float32, dataCount)
+					dataY = make([]float32, dataCount)
+					var i int
+					for i=0; i<dataCount; i++ {
+						dataX[i] = float32(pr.StartFreq) + float32(i/dataLen) * float32(highFreq - lowFreq)
+						//dataY[i] =
+					}
+					dataY = (*data)[dataIndexStart:dataIndexStop]
+				} else {
+					// 请求的数据量小于实际的数据量，此时需要取样
+					actualDataCount = pr.Count
+					dataX = make([]float32, pr.Count)
+					dataY = make([]float32, pr.Count)
+					interval := dataCount/pr.Count
+					var i int
+					for i=0; i<pr.Count; i++ {
+						dataX[i] = float32(pr.StartFreq) + float32(i*interval/dataLen) * float32(highFreq - lowFreq)
+						dataY[i] = float32(lowFreq) + float32(i)*(float32(highFreq - lowFreq))/float32(dataLen)
+					}
+				}
+
+				dataXY := DataInfo{TimeStamp:"", DataX:dataX, DataY:dataY}
+				responseData := ResponseData{MsgType:11, Data:dataXY, Warning:"", PlaybackIndex:0}
+				responseDatab, _ := json.Marshal(&responseData)
+				select {
+				case clientRequests[rid].DataChannel <- responseDatab:
+				default:
+				}
+
+				minDataY, maxDataY := updateMinmaxDataRecord(playbackMinmaxData, int(pipe), actualDataCount, dataY)
+				if minDataY != nil {
+					minDataXY := DataInfo{TimeStamp:"", DataX:dataX, DataY:minDataY}
+					minResponseData := ResponseData{MsgType:12, Data:minDataXY, Warning:""}
+					minResponseDatab,_ := json.Marshal(&minResponseData)
+					select {
+					case clientRequests[rid].DataChannel <- minResponseDatab:
+					default:
+					}
+
+				}
+				if maxDataY != nil {
+					maxDataXY := DataInfo{TimeStamp:"", DataX:dataX, DataY:maxDataY}
+					maxResponseData := ResponseData{MsgType:13, Data:maxDataXY, Warning:"", PlaybackIndex:0}
+					maxResponseDatab,_ := json.Marshal(&maxResponseData)
+					select {
+					case clientRequests[rid].DataChannel <- maxResponseDatab:
+					default:
+					}
+
+				}
+
+				// println("added a data to channel of client", rid)
 			}
 		}
 	}
@@ -173,15 +333,6 @@ type ClientRecord struct {
 	StartTime int64
 }
 
-func addClientRecordRound(cr *ClientRecord, pipe int32) {
-	_, exists := cr.Rounds[pipe]
-	if exists == true {
-		cr.Rounds[pipe] += 1
-	} else {
-		cr.Rounds[pipe] = 1
-	}
-}
-
 var registry = map[int]RegistryItem{}
 
 type DataRequest struct {
@@ -200,91 +351,170 @@ type RegistryItem struct {
 	DataChan     chan DataItemInfo
 }
 
+// 在本地生成客户端的ID
 var rid = 0
-
 func newRid() int {
 	rid = rid + 1
 	return rid
 }
 
-func registerDataChan(registerId int, dataRequests *[]DataRequest, dataChan chan DataItemInfo) {
-	registry[registerId] = RegistryItem{DataRequests: *dataRequests, DataChan: dataChan}
-	newClientRecord := new(ClientRecord)
-	//newClientRecord.Rounds = 0
-	newClientRecord.Rounds = map[int32]int{}
-	newClientRecord.StartTime = time.Now().UnixNano()
-	record[registerId] = newClientRecord
-}
-
-func unregisterDataChan(registerId int) {
-	rItem := registry[registerId]
-	close(rItem.DataChan)
-	delete(registry, registerId)
-}
-
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
 }
 
-type Subscribe struct {
-	Pipe      int32 `json:"pipe"`
-	Count     int32 `json:"count"`
-	StartFreq int32 `json:"startFreq"`
-	StopFreq  int32 `json:"stopFreq"`
-}
+var sending2client = false
+func response2clients(ws *websocket.Conn, rid int) {
 
-type RequestJSON struct {
-	ServerIP  string      `json:"serverIP"`
-	Subscribe []Subscribe `json:"subscribe"`
-}
+	for {
+		//println("trying sending data to client", rid)
+		//dataChannel :=
+		cr, exists := clientRequests[rid]
+		if exists == true {
+			datab := <-cr.DataChannel
+			//datab, _ := json.Marshal(&data)
+			err := ws.WriteMessage(websocket.BinaryMessage, datab)
+			println("sent data to client", rid)
+			if err != nil {
+				//println("cannot send data to client")
+				closeClientConnection(rid)
+			}
+		} else {
+			return
+		}
 
-type ResponseJSON struct {
-	PipeNum int32     `json:"pipe"`
-	Count   int32     `json:"count"`
-	Data    []float64 `json:"data"`
+	}
 }
 
 func serveWs(ws *websocket.Conn) {
-	request := &RequestJSON{}
-	ws.ReadJSON(request)
-	//println(jsonData.DataItemNum)
-	requestItems := make([]DataRequest, len(request.Subscribe))
-	for i, subs := range request.Subscribe {
-		requestItems[i] = DataRequest{PipeNum: subs.Pipe, DataNum: subs.Count}
-		fmt.Printf("client request pipe %d for %d data items\n", subs.Pipe, subs.Count)
-	}
-	// Make a new channel to fetch data to be sent for each client
-	dataChan := make(chan DataItemInfo, 10)
-	registerId := newRid()
-	registerDataChan(registerId, &requestItems, dataChan)
-
+	var currentRid int
+	currentRid = newRid()
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	for {
-		data := <-dataChan
-		var responseData = ResponseJSON{}
-		responseData.PipeNum = data.PipeInfo
-		responseData.Count = data.CountInfo
-		responseData.Data = *(data.Data)
-
-		json := jsoniter.ConfigCompatibleWithStandardLibrary
-		datab, err := json.Marshal(&responseData)
-		ws.WriteMessage(websocket.BinaryMessage, datab)
-
-		currentRecord := record[registerId]
-		addClientRecordRound(currentRecord, data.PipeInfo)
+		// 更改websocket接收形式，先接收[]byte，再解析成map
+		_, buf, err := ws.ReadMessage()
 		if err != nil {
-			unregisterDataChan(registerId)
+			println("cannot read message from websocket client")
 			ws.Close()
-			break
+			return
 		}
+		m := bytes2map(buf)
+		fmt.Printf("ws server received msg:%s\n", string(buf))
+		switch interface2int(m["msgType"]) {
+		// 收到订阅消息请求
+		case 1:
+			serverIP := m["serverIP"].(string)
+			if serverIP == localIP {
+				subs := m["subscribe"].([]interface{})
+				println("received", len(subs), "requests")
 
+				//_ = addClientRequest(currentRid, serverIP)
+				//var dataChannel = make(DataChannel, 10)
+				//addDataChannel(currentRid, dataChannel)
+				var pipe, count int
+				var startFreq, stopFreq float64
+				var subsInfo = make([]SubscribeInfo, len(subs))
+				for i, sub := range subs {
+					subMap := sub.(map[string]interface{})
+
+					pipe = int(subMap["pipe"].(float64))
+					count = int(subMap["count"].(float64))
+					startFreq = subMap["startFreq"].(float64)
+					stopFreq = subMap["stopFreq"].(float64)
+					//addSubscribe(currentRid, pipe, count, startFreq, stopFreq)
+					subsInfo[i] = SubscribeInfo{Pipe:pipe, Count:count, StartFreq:startFreq, StopFreq:stopFreq}
+				}
+				var dataChannel = make(DataChannel, 10)
+				_ = addClientRequest(currentRid, serverIP, &subsInfo, &dataChannel)
+				//if sending2client == false {
+				go response2clients(ws, currentRid)
+					//sending2client = true
+				//}
+			}
+		// 修改订阅请求
+		case 2:
+			serverIP := m["serverIP"].(string)
+			if serverIP == localIP {
+				pipe := int(m["pipe"].(float64))
+				count := int(m["count"].(float64))
+				startFreq := m["startFreq"].(float64)
+				stopFreq := m["stopFreq"].(float64)
+				modifySubscribe(currentRid, pipe, count, startFreq, stopFreq)
+			}
+			// 取消订阅
+		case 3:
+			serverIP := m["serverIP"].(string)
+			if serverIP == localIP {
+				pipe := int(m["pipe"].(float64))
+				removeSubscribe(currentRid, pipe)
+			}
+			// 收到数据回放请求
+		case 4:
+			state := int(m["state"].(float64))
+			pipe := int(m["pipe"].(float64))
+			startDate := m["startDate"].(string)
+			stopDate := m["stopDate"].(string)
+			playPeriod := int(m["playPeriod"].(float64))
+			startIndex := int(m["startIndex"].(float64))
+			startFreq := m["startFreq"].(float64)
+			stopFreq := m["stopFreq"].(float64)
+			println("data playback request from client", currentRid, state, pipe, startDate, stopDate, playPeriod, startIndex)
+			switch state {
+			case 0:
+				startTime,_ := time.ParseInLocation("2006-01-02 15:04:05", startDate, time.Local)
+				stopTime,_ := time.ParseInLocation("2006-01-02 15:04:05", stopDate, time.Local)
+
+				var querySuccess int
+				if startTime.Day() == time.Now().Day() {
+					querySuccess = spuQueryAll(pipe, startTime.Unix(), stopTime.Unix())
+				} else {
+					querySuccess = spuQuerySam(pipe, startTime.Unix(), stopTime.Unix())
+				}
+				var playBackResponse Playback
+				if querySuccess == 1 {
+					spuCount := spuCount()
+					playBackResponse = Playback{MsgType:5, Success:1, ServerIP:localIP, Pipe:pipe, StartDate:startDate, StopDate:stopDate, Data:spuCount}
+				} else {
+					playBackResponse = Playback{MsgType:5, Success:0, ServerIP:localIP, Pipe:pipe, StartDate:startDate, StopDate:stopDate, Data:0}
+				}
+				playBackResponseb,_ := json.Marshal(&playBackResponse)
+				select {
+				case clientRequests[currentRid].DataChannel <- playBackResponseb:
+					preparePlayback(currentRid, pipe, 600, playPeriod, startIndex, startFreq, stopFreq)
+				default:
+				}
+
+			case 1:
+				startPlayback(currentRid, pipe)
+				go sendPlayback(115, currentRid, pipe)
+			case 2:
+				pausePlayback(currentRid, pipe)
+			case 3:
+				setPlaybackPeriod(currentRid, pipe, playPeriod)
+			case 4:
+				setPlaybackStartIndex(currentRid, pipe, startIndex)
+			case 5:
+				setPlaybackFreq(currentRid, pipe, startFreq, stopFreq)
+			//default:
+
+			}
+
+			println("data playback, have not implemented")
+			// 不明请求
+		default:
+			println("unknown request type")
+		}
 	}
 }
 
 func serveHttp(w http.ResponseWriter, r *http.Request) {
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		println("error when handling http request")
+		println("error when handling http request ", err.Error())
+
 		return
 	}
 	//defer ws.Close()
@@ -298,7 +528,7 @@ func listen(ip string, port int) {
 }
 
 func main() {
-	usingNano := flag.Bool("nano", true, "Whether using NanoMSG or not")
+	//usingNano := flag.Bool("nano", true, "Whether using NanoMSG or not")
 	url := flag.String("url", "tcp://127.0.0.1:8080", "URL for connecting NanoMSG, in the form of either \"tcp://\" or \"ipc://\"")
 	wsport := flag.Int("port", 1999, "Websocket server listening port")
 	timeout := flag.Int("timeout", 30, "Timeout for testing purpose (seconds)")
@@ -307,19 +537,21 @@ func main() {
 	// Fetch data from raw tcp socket
 	//go readDataRAW("192.168.9.72", 2000)
 
+	// 得到本地IP地址，用来过滤掉非法请求：一个客户端的请求是合法的仅当请求中serverIP字段与本地IP一致
+	localIP = getLocalIP()
+
+	initSpu()
+
 	// Fetch data from NanoMSG
-	if *usingNano == true {
-		go readDataNanoMSG(*url)
-	} else {
-		go readDataRAW(*url)
-	}
+	go readDataNanoMSG(*url, 115)
+
 
 	//go readDataNanoMSG(*nanoUrl)
 
 	// Shut down the system in `timeout` seconds
 	go shuttingDown(*timeout)
 	listen("", *wsport)
-
+	closeSpu()
 	// Don't remove this, otherwise the program fails
 	time.Sleep(10 * time.Second)
 

@@ -13,57 +13,60 @@ async def hello(uri, cno):
     async with websockets.connect(uri) as websocket:
 
         jsonData = {
-            "serverIP": "192.168.9.72",
+            "msgType": 1,
+            "serverIP": "192.168.31.200",
             "subscribe": [
                 {
-                    "pipe": 1,
+                    "pipe": 0,
                     "count": 2000,
                     "startFreq": 100,
                     "stopFreq": 2000
                 }
-                ,
-                {
-                    "pipe": 2,
-                    "count": 2000,
-                    "startFreq": 100,
-                    "stopFreq": 2000
-                },
-                {
-                    "pipe": 3,
-                    "count": 2000,
-                    "startFreq": 100,
-                    "stopFreq": 2000
-                },
-                {
-                    "pipe": 4,
-                    "count": 2000,
-                    "startFreq": 100,
-                    "stopFreq": 2000
-                }
+                # ,
+                # {
+                #     "pipe": 1,
+                #     "count": 2000,
+                #     "startFreq": 100,
+                #     "stopFreq": 2000
+                # },
+                # {
+                #     "pipe": 2,
+                #     "count": 2000,
+                #     "startFreq": 100,
+                #     "stopFreq": 2000
+                # },
+                # {
+                #     "pipe": 3,
+                #     "count": 2000,
+                #     "startFreq": 100,
+                #     "stopFreq": 2000
+                # }
             ]
         }
 
         jsonStr = json.dumps(jsonData)
         await websocket.send(jsonStr)
-        print("json data sent")
+        # print("json data sent")
         received = {}
+        receivedNo = 0
         try:
             while True:
                 msg = await websocket.recv()
                 # jsonmsg = ""
-                print("type of msg:", type(msg))
+                # print("type of msg:", type(msg))
                 print("size of msg:", len(msg))
                 # print("msg:\n", msg)
                 jsonData = json.loads(msg.decode('utf-8'))
+                receivedNo += 1
                 # received[jsonData["pipe"]] += 1
-                pipeNum = jsonData['pipe']
-                if pipeNum not in received:
-                    received[pipeNum] = 1
-                else:
-                    received[pipeNum] += 1
-        except Exception as e:
-            print("data received ", received, "msg(s)")
-            print('exception:', e)
+                # pipeNum = jsonData['pipe']
+                # if pipeNum not in received:
+                #    received[pipeNum] = 1
+                # else:
+                #    received[pipeNum] += 1
+        except Exception:
+            print("client", cno, "received ", receivedNo, "msg(s)")
+            # print('exception:', e)
             # print("client", cno, "received for each pipe", received)
 
 def startClient(serverIp, serverPort, cno):
