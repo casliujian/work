@@ -1,0 +1,90 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{CBJPK}
+Baier, C., Katoen, J.: Principles of model checking. {MIT} Press (2008)
+
+\bibitem{bajaj2003interactive}
+Bajaj, C., Khandelwal, S., Moore, J., Siddavanahalli, V.: Interactive symbolic
+  visualization of semi-automatic theorem proving. Computer Science Department,
+  University of Texas at Austin (2003)
+
+\bibitem{bertot2013interactive}
+Bertot, Y., Cast{\'e}ran, P.: Interactive Theorem Proving and Program
+  Development: Coq'Art: The Calculus of Inductive Constructions. Springer
+  Science \& Business Media (2013)
+
+\bibitem{byrnes2009visualizing}
+Byrnes, J., Buchanan, M., Ernst, M., Miller, P., Roberts, C., Keller, R.:
+  Visualizing proof search for theorem prover development. Electronic Notes in
+  Theoretical Computer Science  \textbf{226},  23--38 (2009)
+
+\bibitem{CGMZ}
+Clarke, E.M., Grumberg, O., McMillan, K.L., Zhao, X.: Efficient generation of
+  counterexamples and witnesses in symbolic model checking. In: {DAC}. pp.
+  427--432 (1995)
+
+\bibitem{CGP01}
+Clarke, E.M., Grumberg, O., Peled, D.: Model checking. {MIT} Press, Cambridge,
+  MA, USA (2001)
+
+\bibitem{dowek2013logical}
+Dowek, G., Jiang, Y.: A logical approach to {CTL}  (2013),
+  \url{https://who.rocq.inria.fr/Gilles.Dowek/Publi/ctl.pdf}
+
+\bibitem{EmersonC82}
+Emerson, E.A., Clarke, E.M.: Using branching time temporal logic to synthesize
+  synchronization skeletons. Sci. Comput. Program.  \textbf{2}(3),  241--266
+  (1982)
+
+\bibitem{EmersonH85}
+Emerson, E.A., Halpern, J.Y.: Decision procedures and expressiveness in the
+  temporal logic of branching time. J. Comput. Syst. Sci.  \textbf{30}(1),
+  1--24 (1985)
+
+\bibitem{Farmer200939}
+Farmer, W.M., Grigorov, O.G.: Panoptes: An exploration tool for formal proofs.
+  Electr. Notes Theor. Comput. Sci.  \textbf{226},  39--48 (2009)
+
+\bibitem{Fitting96}
+Fitting, M.: First-Order Logic and Automated Theorem Proving, Second Edition.
+  Graduate Texts in Computer Science, Springer (1996)
+
+\bibitem{yifanhu05}
+Hu, Y.: Efficient and high quality force-directed graph drawing. The
+  Matematical Journal  \textbf{10},  149--160 (2005)
+
+\bibitem{LiuDJJ16}
+Jiang, Y., Liu, J., Dowek, G., Ji, K.: {SCTL:} towards combining model checking
+  and proof checking. arXiv  (2017)
+
+\bibitem{LibalRR14}
+Libal, T., Riener, M., Rukhaia, M.: Advanced proof viewing in prooftool. In:
+  Proceedings Eleventh Workshop on User Interfaces for Theorem Provers, {UITP}
+  2014, Vienna, Austria, 17th July 2014. pp. 35--47 (2014)
+
+\bibitem{Loveland78}
+Loveland, D.W.: Automated Theorem Proving: A Logical Basis (Fundamental Studies
+  in Computer Science). Elsevier (1978)
+
+\bibitem{martin2011openord}
+Martin, S., Brown, W.M., Klavans, R., Boyack, K.W.: Openord: an open-source
+  toolbox for large graph layout. SPIE Proceedings  \textbf{7868} (2011)
+
+\bibitem{jacomy2014forceatlas2}
+Mathieu, J., Tommaso, V., Sebastien, H., Bastian, M.: Forceatlas2, a continuous
+  graph layout algorithm for handy network visualization designed for the gephi
+  software. PLOS ONE  \textbf{9}(6),  e98679 (2014)
+
+\bibitem{sakurai2011mikibeta}
+Sakurai, K., Asai, K.: Mikibeta: A general {GUI} library for visualizing proof
+  trees. In: Logic-Based Program Synthesis and Transformation, pp. 84--98.
+  Springer (2011)
+
+\bibitem{steel2005visualising}
+Steel, G.: Visualising first-order proof search. In: Proceedings of User
+  Interfaces for Theorem Provers. vol.~2005, pp. 179--189 (2005)
+
+\end{thebibliography}

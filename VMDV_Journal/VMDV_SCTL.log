@@ -1,0 +1,633 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6730 64-bit) (preloaded format=pdflatex 2018.7.3)  18 JUL 2018 15:32
+entering extended mode
+**./VMDV_SCTL.tex
+(VMDV_SCTL.tex
+LaTeX2e <2018-04-01> patch level 5
+(llncs.cls
+Document Class: llncs 2018/03/10 v2.20 
+ LaTeX document class for Lecture Notes in Computer Science
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\article.cls"
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\size10.clo"
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\multicol.sty"
+Package: multicol 2018/04/20 v1.8s multicolumn formatting (FMi)
+\c@tracingmulticols=\count88
+\mult@box=\box26
+\multicol@leftmargin=\dimen103
+\c@unbalance=\count89
+\c@collectmore=\count90
+\doublecol@number=\count91
+\multicoltolerance=\count92
+\multicolpretolerance=\count93
+\full@width=\dimen104
+\page@free=\dimen105
+\premulticols=\dimen106
+\postmulticols=\dimen107
+\multicolsep=\skip43
+\multicolbaselineskip=\skip44
+\partial@page=\box27
+\last@line=\box28
+\maxbalancingoverflow=\dimen108
+\mult@rightbox=\box29
+\mult@grightbox=\box30
+\mult@gfirstbox=\box31
+\mult@firstbox=\box32
+\@tempa=\box33
+\@tempa=\box34
+\@tempa=\box35
+\@tempa=\box36
+\@tempa=\box37
+\@tempa=\box38
+\@tempa=\box39
+\@tempa=\box40
+\@tempa=\box41
+\@tempa=\box42
+\@tempa=\box43
+\@tempa=\box44
+\@tempa=\box45
+\@tempa=\box46
+\@tempa=\box47
+\@tempa=\box48
+\@tempa=\box49
+\c@columnbadness=\count94
+\c@finalcolumnbadness=\count95
+\last@try=\dimen109
+\multicolovershoot=\dimen110
+\multicolundershoot=\dimen111
+\mult@nat@firstbox=\box50
+\colbreak@box=\box51
+\mc@col@check@num=\count96
+)
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\aliascnt.s
+ty"
+Package: aliascnt 2016/05/16 v1.4 Alias counters (HO)
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\carlisle\remreset.s
+ty"
+
+Package remreset Warning: The remreset package is obsolete:
+(remreset)                \@removefomresset is defined.
+
+))
+\c@chapter=\count97
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 362.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 363.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 364.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 365.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 366.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 367.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 368.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 369.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 370.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 371.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 372.
+\tocchpnum=\dimen112
+\tocsecnum=\dimen113
+\tocsectotal=\dimen114
+\tocsubsecnum=\dimen115
+\tocsubsectotal=\dimen116
+\tocsubsubsecnum=\dimen117
+\tocsubsubsectotal=\dimen118
+\tocparanum=\dimen119
+\tocparatotal=\dimen120
+\tocsubparanum=\dimen121
+\@tempcntc=\count98
+\fnindent=\dimen122
+\c@@inst=\count99
+\c@@auth=\count100
+\c@auco=\count101
+\instindent=\dimen123
+\authrun=\box52
+\authorrunning=\toks14
+\tocauthor=\toks15
+\titrun=\box53
+\titlerunning=\toks16
+\toctitle=\toks17
+\c@theorem=\count102
+\c@case=\count103
+\c@conjecture=\count104
+\c@corollary=\count105
+\c@definition=\count106
+\c@example=\count107
+\c@exercise=\count108
+\c@lemma=\count109
+\c@note=\count110
+\c@problem=\count111
+\c@property=\count112
+\c@proposition=\count113
+\c@question=\count114
+\c@solution=\count115
+\c@remark=\count116
+\headlineindent=\dimen124
+)
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\bussproofs\bussproo
+fs.sty"
+Proof Tree (bussproofs) style macros. Version 1.1.
+\theLevel=\count117
+\myMaxLevel=\count118
+\myBoxA=\box54
+\myBoxB=\box55
+\myBoxC=\box56
+\myBoxD=\box57
+\myBoxLL=\box58
+\myBoxRL=\box59
+\thisAboveSkip=\dimen125
+\thisBelowSkip=\dimen126
+\newScoreStart=\dimen127
+\newScoreEnd=\dimen128
+\newCenter=\dimen129
+\displace=\dimen130
+\leftLowerAmt=\dimen131
+\rightLowerAmt=\dimen132
+\scoreHeight=\dimen133
+\scoreDepth=\dimen134
+\htLbox=\dimen135
+\htRbox=\dimen136
+\htRRbox=\dimen137
+\htRRRbox=\dimen138
+\htAbox=\dimen139
+\htCbox=\dimen140
+)
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\amssymb.st
+y"
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.s
+ty"
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks18
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphicx.s
+ty"
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\keyval.sty
+"
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks19
+)
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphics.s
+ty"
+Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\graphi
+cs.cfg"
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 99.
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-def\pdftex
+.def"
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen141
+\Gin@req@width=\dimen142
+) ("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\url\url.sty"
+\Urlmuskip=\muskip10
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\color.sty"
+Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\color.
+cfg"
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 147.
+)
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\lkproof\proof.sty"
+\inferLineSkip=\dimen143
+\inferLabelSkip=\dimen144
+\@LeftOffset=\dimen145
+\@RightOffset=\dimen146
+\@SavedLeftOffset=\dimen147
+\UpperWidth=\dimen148
+\LowerWidth=\dimen149
+\LowerHeight=\dimen150
+\UpperLeftOffset=\dimen151
+\UpperRightOffset=\dimen152
+\UpperCenter=\dimen153
+\LowerCenter=\dimen154
+\UpperAdjust=\dimen155
+\RuleAdjust=\dimen156
+\LowerAdjust=\dimen157
+\RuleWidth=\dimen158
+\HLabelAdjust=\dimen159
+\VLabelAdjust=\dimen160
+\WidthAdjust=\dimen161
+\@UpperPart=\box60
+\@LowerPart=\box61
+\@LabelPart=\box62
+\ResultBox=\box63
+) ("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\qtree\qtree.sty"
+Package: 2008/12/12 v.3.1bQtree: tree-drawing for linguistics
+Package: qtree 2008/12/12 v.3.1bQtree: tree-drawing for linguistics
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\pict2e\pict2e.sty"
+Package: pict2e 2016/02/05 v0.3b Improved picture commands (HjG,RN,JT)
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\pict2e\pict2e.cfg"
+File: pict2e.cfg 2016/02/05 v0.1u pict2e configuration for teTeX/TeXLive
+)
+Package pict2e Info: Driver file: pdftex.def on input line 119.
+Package pict2e Info: Driver file for pict2e: p2e-pdftex.def on input line 121.
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\pict2e\p2e-pdftex.d
+ef"
+File: p2e-pdftex.def 2016/02/05 v0.1u Driver-dependant file (RN,HjG,JT)
+)
+\pIIe@GRAPH=\toks20
+\@arclen=\dimen162
+\@arcrad=\dimen163
+\@tempdimd=\dimen164
+)
+\c@treecount=\count119
+\c@branchcount=\count120
+\parentbox=\box64
+\treebox=\box65
+\treeboxone=\box66
+\treeboxtwo=\box67
+\treeboxthree=\box68
+\treeboxfour=\box69
+\treeboxfive=\box70
+\treeboxsix=\box71
+\treeboxseven=\box72
+\treeboxeight=\box73
+\treeboxnine=\box74
+\treeboxten=\box75
+\treeboxeleven=\box76
+\treeboxtwelve=\box77
+\treeboxthirteen=\box78
+\treeboxfourteen=\box79
+\treeboxfifteen=\box80
+\treeboxsixteen=\box81
+\treeboxseventeen=\box82
+\treeboxeighteen=\box83
+\treeboxnineteen=\box84
+\treeboxtwenty=\box85
+\treeoffsetone=\skip45
+\treeoffsettwo=\skip46
+\treeoffsetthree=\skip47
+\treeoffsetfour=\skip48
+\treeoffsetfive=\skip49
+\treeoffsetsix=\skip50
+\treeoffsetseven=\skip51
+\treeoffseteight=\skip52
+\treeoffsetnine=\skip53
+\treeoffsetten=\skip54
+\treeoffseteleven=\skip55
+\treeoffsettwelve=\skip56
+\treeoffsetthirteen=\skip57
+\treeoffsetfourteen=\skip58
+\treeoffsetfifteen=\skip59
+\treeoffsetsixteen=\skip60
+\treeoffsetseventeen=\skip61
+\treeoffseteighteen=\skip62
+\treeoffsetnineteen=\skip63
+\treeoffsettwenty=\skip64
+\treeshiftone=\skip65
+\treeshifttwo=\skip66
+\treeshiftthree=\skip67
+\treeshiftfour=\skip68
+\treeshiftfive=\skip69
+\treeshiftsix=\skip70
+\treeshiftseven=\skip71
+\treeshifteight=\skip72
+\treeshiftnine=\skip73
+\treeshiftten=\skip74
+\treeshifteleven=\skip75
+\treeshifttwelve=\skip76
+\treeshiftthirteen=\skip77
+\treeshiftfourteen=\skip78
+\treeshiftfifteen=\skip79
+\treeshiftsixteen=\skip80
+\treeshiftseventeen=\skip81
+\treeshifteighteen=\skip82
+\treeshiftnineteen=\skip83
+\treeshifttwenty=\skip84
+\treewidthone=\skip85
+\treewidthtwo=\skip86
+\treewidththree=\skip87
+\treewidthfour=\skip88
+\treewidthfive=\skip89
+\treewidthsix=\skip90
+\treewidthseven=\skip91
+\treewidtheight=\skip92
+\treewidthnine=\skip93
+\treewidthten=\skip94
+\treewidtheleven=\skip95
+\treewidthtwelve=\skip96
+\treewidththirteen=\skip97
+\treewidthfourteen=\skip98
+\treewidthfifteen=\skip99
+\treewidthsixteen=\skip100
+\treewidthseventeen=\skip101
+\treewidtheighteen=\skip102
+\treewidthnineteen=\skip103
+\treewidthtwenty=\skip104
+\daughteroffsetone=\skip105
+\daughteroffsettwo=\skip106
+\daughteroffsetthree=\skip107
+\daughteroffsetfour=\skip108
+\branchwidthone=\skip109
+\branchwidthtwo=\skip110
+\branchwidththree=\skip111
+\branchwidthfour=\skip112
+\parentoffset=\skip113
+\treeoffset=\skip114
+\daughteroffset=\skip115
+\branchwidth=\skip116
+\parentwidth=\skip117
+\treewidth=\skip118
+\qta=\toks21
+\qtb=\toks22
+\nbranches=\count121
+\qroofx=\count122
+\qroofy=\count123
+\@qrscratchbox=\box86
+) (VMDV_SCTL.aux)
+\openout1 = `VMDV_SCTL.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\context\base\supp-pdf.mki
+i"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count124
+\scratchdimen=\dimen165
+\scratchbox=\box87
+\nofMPsegments=\count125
+\nofMParguments=\count126
+\everyMPshowfont=\toks23
+\MPscratchCnt=\count127
+\MPscratchDim=\dimen166
+\MPnumerator=\count128
+\makeMPintoPDFobject=\count129
+\everyMPtoPDFconversion=\toks24
+)
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-b
+ase.sty"
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\infwarer
+r.sty"
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+)
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\grfext.sty
+"
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\kvdefine
+keys.sty"
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.
+sty"
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)))
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.
+sty"
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\kvsetkey
+s.sty"
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\etexcmds
+.sty"
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\ifluatex
+.sty"
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\pdftexcm
+ds.sty"
+Package: pdftexcmds 2018/01/30 v0.27 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.st
+y"
+Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+38.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+)
+LaTeX Font Info:    Try loading font information for U+msa on input line 28.
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 28.
+
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Title too long for running head. Please supply
+a shorter form with \titlerunning prior to \maketitle
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 41.
+("C:\Users\Jian\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 41.
+
+[1
+
+{C:/Users/Jian/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+<./compare_123.png, id=12, 1479.27657pt x 740.0147pt>
+File: ./compare_123.png Graphic file (type png)
+<use ./compare_123.png>
+Package pdftex.def Info: ./compare_123.png  used on input line 91.
+(pdftex.def)             Requested size: 256.0748pt x 128.10434pt.
+ [2 <./compare_123.png>]
+Underfull \vbox (badness 3009) has occurred while \output is active []
+
+ [3]
+[4]
+
+LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 282.
+
+
+<./architecture.png, id=29, 577.40718pt x 329.73187pt>
+File: ./architecture.png Graphic file (type png)
+<use ./architecture.png>
+Package pdftex.def Info: ./architecture.png  used on input line 299.
+(pdftex.def)             Requested size: 256.0748pt x 146.23965pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[5]
+Underfull \vbox (badness 3547) has occurred while \output is active []
+
+ [6 <./architecture.png>]
+<./050407.png, id=44, 740.7675pt x 746.79pt>
+File: ./050407.png Graphic file (type png)
+<use ./050407.png>
+Package pdftex.def Info: ./050407.png  used on input line 318.
+(pdftex.def)             Requested size: 184.9429pt x 186.44633pt.
+<./phi_prooftreegraph_angles.png, id=45, 1379.75475pt x 425.79076pt>
+File: ./phi_prooftreegraph_angles.png Graphic file (type png)
+<use ./phi_prooftreegraph_angles.png>
+Package pdftex.def Info: ./phi_prooftreegraph_angles.png  used on input line 33
+1.
+(pdftex.def)             Requested size: 256.0748pt x 79.02344pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<./high_different.png, id=46, 938.90775pt x 799.18575pt>
+File: ./high_different.png Graphic file (type png)
+<use ./high_different.png>
+Package pdftex.def Info: ./high_different.png  used on input line 342.
+(pdftex.def)             Requested size: 256.0748pt x 217.96587pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<./user_defined_operation.png, id=47, 1181.01225pt x 369.7815pt>
+File: ./user_defined_operation.png Graphic file (type png)
+<use ./user_defined_operation.png>
+Package pdftex.def Info: ./user_defined_operation.png  used on input line 348.
+(pdftex.def)             Requested size: 256.0748pt x 80.17856pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[7 <./050407.png>] [8 <./phi_prooftreegraph_angles.png> <./high_different.png> 
+<./user_defined_operation.png>] [9]
+LaTeX Font Info:    Try loading font information for OMS+cmss on input line 404
+.
+LaTeX Font Info:    No file OMScmss.fd. on input line 404.
+
+
+LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbraceleft' on input line 404.
+
+[10]
+<./river_prooftreegraph_step.png, id=61, 646.8165pt x 282.45525pt>
+File: ./river_prooftreegraph_step.png Graphic file (type png)
+<use ./river_prooftreegraph_step.png>
+Package pdftex.def Info: ./river_prooftreegraph_step.png  used on input line 43
+3.
+(pdftex.def)             Requested size: 241.84842pt x 105.61014pt.
+<./river_prooftreegraph_state_highlight.png, id=62, 767.2665pt x 527.571pt>
+File: ./river_prooftreegraph_state_highlight.png Graphic file (type png)
+<use ./river_prooftreegraph_state_highlight.png>
+Package pdftex.def Info: ./river_prooftreegraph_state_highlight.png  used on in
+put line 440.
+(pdftex.def)             Requested size: 227.62204pt x 156.50955pt.
+<./ag_proof_state.png, id=63, 953.964pt x 484.209pt>
+File: ./ag_proof_state.png Graphic file (type png)
+<use ./ag_proof_state.png>
+Package pdftex.def Info: ./ag_proof_state.png  used on input line 460.
+(pdftex.def)             Requested size: 256.0748pt x 129.97716pt.
+<./ag_part_detail.png, id=64, 1138.85475pt x 383.63326pt>
+File: ./ag_part_detail.png Graphic file (type png)
+<use ./ag_part_detail.png>
+Package pdftex.def Info: ./ag_part_detail.png  used on input line 467.
+(pdftex.def)             Requested size: 256.0748pt x 86.26106pt.
+ [11 <./river_prooftreegraph_step.png> <./river_prooftreegraph_state_highlight.
+png>]
+
+LaTeX Font Warning: Command \small invalid in math mode on input line 475.
+
+[12 <./ag_proof_state.png> <./ag_part_detail.png>]
+<./coq_example.png, id=72, 483.60675pt x 412.54124pt>
+File: ./coq_example.png Graphic file (type png)
+<use ./coq_example.png>
+Package pdftex.def Info: ./coq_example.png  used on input line 490.
+(pdftex.def)             Requested size: 170.71652pt x 145.63168pt.
+ [13 <./coq_example.png>]
+(VMDV_SCTL.bbl [14]) [15] (VMDV_SCTL.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 2965 strings out of 492973
+ 41857 string characters out of 3127136
+ 126686 words of memory out of 3000000
+ 6756 multiletter control sequences out of 15000+200000
+ 14272 words of font info for 54 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 41i,23n,28p,1251b,444s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/
+cm/cmbx10.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmbx12.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/font
+s/type1/public/amsfonts/cm/cmbx7.pfb><C:/Users/Jian/AppData/Local/Programs/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Users/Jian/AppData/Local/Pr
+ograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Jian/AppD
+ata/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/User
+s/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.p
+fb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
+/cm/cmmi9.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmr10.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/Jian/AppData/Local/Progr
+ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/Jian/AppData/L
+ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/Jian
+/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss10.pfb><C
+:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
+mss8.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/am
+sfonts/cm/cmss9.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmssbx10.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Jian/AppData/Local/Prog
+rams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/Jian/AppData
+/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/J
+ian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
+<C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
+/cmti10.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public
+/amsfonts/cm/cmtt10.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/
+type1/public/amsfonts/cm/cmtt9.pfb>
+Output written on VMDV_SCTL.pdf (15 pages, 3804208 bytes).
+PDF statistics:
+ 158 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
+
