@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6730 64-bit) (preloaded format=pdflatex 2018.7.3)  18 JUL 2018 15:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6730 64-bit) (preloaded format=pdflatex 2018.7.3)  19 JUL 2018 19:39
 entering extended mode
-**./VMDV_SCTL.tex
-(VMDV_SCTL.tex
+**C:/Users/Jian/Desktop/git_casliujian/work/VMDV_Journal/VMDV_SCTL.tex
+(C:/Users/Jian/Desktop/git_casliujian/work/VMDV_Journal/VMDV_SCTL.tex
 LaTeX2e <2018-04-01> patch level 5
 (llncs.cls
 Document Class: llncs 2018/03/10 v2.20 
@@ -481,11 +481,11 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
 [1
 
 {C:/Users/Jian/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<./compare_123.png, id=12, 1479.27657pt x 740.0147pt>
+<./compare_123.png, id=12, 1456.69218pt x 744.53156pt>
 File: ./compare_123.png Graphic file (type png)
 <use ./compare_123.png>
 Package pdftex.def Info: ./compare_123.png  used on input line 91.
-(pdftex.def)             Requested size: 256.0748pt x 128.10434pt.
+(pdftex.def)             Requested size: 256.0748pt x 130.87436pt.
  [2 <./compare_123.png>]
 Underfull \vbox (badness 3009) has occurred while \output is active []
 
@@ -507,39 +507,39 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 Underfull \vbox (badness 3547) has occurred while \output is active []
 
  [6 <./architecture.png>]
-<./050407.png, id=44, 740.7675pt x 746.79pt>
+<./050407.png, id=44, 857.45343pt x 775.39688pt>
 File: ./050407.png Graphic file (type png)
 <use ./050407.png>
 Package pdftex.def Info: ./050407.png  used on input line 318.
-(pdftex.def)             Requested size: 184.9429pt x 186.44633pt.
-<./phi_prooftreegraph_angles.png, id=45, 1379.75475pt x 425.79076pt>
+(pdftex.def)             Requested size: 213.39566pt x 192.9732pt.
+<./phi_prooftreegraph_angles.png, id=45, 828.84656pt x 410.2828pt>
 File: ./phi_prooftreegraph_angles.png Graphic file (type png)
 <use ./phi_prooftreegraph_angles.png>
 Package pdftex.def Info: ./phi_prooftreegraph_angles.png  used on input line 33
 1.
-(pdftex.def)             Requested size: 256.0748pt x 79.02344pt.
+(pdftex.def)             Requested size: 256.0748pt x 126.75438pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./high_different.png, id=46, 938.90775pt x 799.18575pt>
+<./high_different.png, id=46, 854.44218pt x 911.65594pt>
 File: ./high_different.png Graphic file (type png)
 <use ./high_different.png>
 Package pdftex.def Info: ./high_different.png  used on input line 342.
-(pdftex.def)             Requested size: 256.0748pt x 217.96587pt.
+(pdftex.def)             Requested size: 256.0748pt x 273.22067pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<./user_defined_operation.png, id=47, 1181.01225pt x 369.7815pt>
+<./user_defined_operation.png, id=47, 338.76563pt x 355.3275pt>
 File: ./user_defined_operation.png Graphic file (type png)
 <use ./user_defined_operation.png>
 Package pdftex.def Info: ./user_defined_operation.png  used on input line 348.
-(pdftex.def)             Requested size: 256.0748pt x 80.17856pt.
+(pdftex.def)             Requested size: 142.26378pt x 149.22026pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[7 <./050407.png>] [8 <./phi_prooftreegraph_angles.png> <./high_different.png> 
-<./user_defined_operation.png>] [9]
+[7 <./050407.png>] [8 <./phi_prooftreegraph_angles.png> <./high_different.png>]
+[9 <./user_defined_operation.png>]
 LaTeX Font Info:    Try loading font information for OMS+cmss on input line 404
 .
 LaTeX Font Info:    No file OMScmss.fd. on input line 404.
@@ -556,12 +556,16 @@ File: ./river_prooftreegraph_step.png Graphic file (type png)
 Package pdftex.def Info: ./river_prooftreegraph_step.png  used on input line 43
 3.
 (pdftex.def)             Requested size: 241.84842pt x 105.61014pt.
-<./river_prooftreegraph_state_highlight.png, id=62, 767.2665pt x 527.571pt>
+<./river_prooftreegraph_state_highlight.png, id=62, 1172.88188pt x 548.0475pt>
 File: ./river_prooftreegraph_state_highlight.png Graphic file (type png)
 <use ./river_prooftreegraph_state_highlight.png>
 Package pdftex.def Info: ./river_prooftreegraph_state_highlight.png  used on in
 put line 440.
-(pdftex.def)             Requested size: 227.62204pt x 156.50955pt.
+(pdftex.def)             Requested size: 227.62204pt x 106.35454pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
 <./ag_proof_state.png, id=63, 953.964pt x 484.209pt>
 File: ./ag_proof_state.png Graphic file (type png)
 <use ./ag_proof_state.png>
@@ -572,31 +576,33 @@ File: ./ag_part_detail.png Graphic file (type png)
 <use ./ag_part_detail.png>
 Package pdftex.def Info: ./ag_part_detail.png  used on input line 467.
 (pdftex.def)             Requested size: 256.0748pt x 86.26106pt.
- [11 <./river_prooftreegraph_step.png> <./river_prooftreegraph_state_highlight.
-png>]
+[11 <./river_prooftreegraph_step.png>]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[12 <./river_prooftreegraph_state_highlight.png> <./ag_proof_state.png>]
 
 LaTeX Font Warning: Command \small invalid in math mode on input line 475.
 
-[12 <./ag_proof_state.png> <./ag_part_detail.png>]
 <./coq_example.png, id=72, 483.60675pt x 412.54124pt>
 File: ./coq_example.png Graphic file (type png)
 <use ./coq_example.png>
 Package pdftex.def Info: ./coq_example.png  used on input line 490.
 (pdftex.def)             Requested size: 170.71652pt x 145.63168pt.
- [13 <./coq_example.png>]
-(VMDV_SCTL.bbl [14]) [15] (VMDV_SCTL.aux)
+[13 <./ag_part_detail.png> <./coq_example.png>] (VMDV_SCTL.bbl [14]) [15]
+(VMDV_SCTL.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 2965 strings out of 492973
- 41857 string characters out of 3127136
+ 2967 strings out of 492973
+ 42142 string characters out of 3127136
  126686 words of memory out of 3000000
  6756 multiletter control sequences out of 15000+200000
  14272 words of font info for 54 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,23n,28p,1251b,444s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,23n,28p,1304b,444s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/
 cm/cmbx10.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
 ic/amsfonts/cm/cmbx12.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/font
@@ -625,7 +631,7 @@ ian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
 /cmti10.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public
 /amsfonts/cm/cmtt10.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/
 type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on VMDV_SCTL.pdf (15 pages, 3804208 bytes).
+Output written on VMDV_SCTL.pdf (15 pages, 5299487 bytes).
 PDF statistics:
  158 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
