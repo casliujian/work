@@ -83,6 +83,12 @@ Sakurai, K., Asai, K.: Mikibeta: A general {GUI} library for visualizing proof
   trees. In: Logic-Based Program Synthesis and Transformation, pp. 84--98.
   Springer (2011)
 
+\bibitem{SchroederML96}
+Schroeder, W.J., Martin, K., Lorensen, W.E.: The design and implementation of
+  an object-oriented toolkit for 3d graphics and visualization. In:
+  Visualization '96, Proceedings, San Francisco, CA, USA, October 27 - November
+  1, 1996. pp. 93--100 (1996)
+
 \bibitem{steel2005visualising}
 Steel, G.: Visualising first-order proof search. In: Proceedings of User
   Interfaces for Theorem Provers. vol.~2005, pp. 179--189 (2005)
