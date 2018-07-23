@@ -323,17 +323,15 @@ Note that \vmdv{} allows multiple outputs to visualize multiple structures, proo
  
 %\vspace{-10pt}
 \subsection{Interfaces}
-%\vspace{-5pt}
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=7.5cm]{./050407.png}
+	\caption{A typical screenshot of \textsf{VMDV}.}
+	\label{fig:screenshot}
+\end{figure}
 Fig. \ref{fig:screenshot} shows a typical screenshot of \textsf{VMDV}. It consists of two panels: the main panel on the top shows the overall structure of the proof tree, and the panel at the bottom shows the details of the selected nodes.
 Similar to other 3D visualization tools, \vmdv{} adopts some commonly used operations (for instance, zooming, rotation, and selection) to interact with 3D graphs. Furthermore, \vmdv{} provides mechanisms to extend its functionalities to fulfill the special requirements of different kinds of theorem provers.
-\begin{figure}[h]
-\centering
-\includegraphics[width=7.5cm]{./050407.png}
-%\caption{Screenshots of VMDV: the left picture consists a local panel showing children of a selected node, while the right picture consists a local panel showing ancestors of a selected node.}
-\caption{A typical screenshot of \textsf{VMDV}.}
-\label{fig:screenshot}
-\end{figure}
-\smallskip
+
 
 \hspace{-0.5cm}
 {\bf Zooming and rotation.}
@@ -395,20 +393,12 @@ This way, defining operations for new theorem provers in \vmdv{} can be implemen
  
 
 \section{Applications}
-%In this section, we applies \vmdv{} to \textsf{SCTL} and alternating pushdown systems.
-%\vspace{-5pt}
-In this section, we first show how \vmdv{} can visualize output from \textsf{SCTLProV}, and then illustrate how \vmdv{} visualize proof trees produced by the existing theorem prover Coq \cite{bertot2013interactive}.
- 
-%\vspace{-10pt}
-\subsection{\textsf{SCTLProV}}
-%\vspace{-5pt}
 With the application of \textsf{VMDV}, we can show both proof trees and Kripke models in 3D format.
 We can also visualize, in 3D format, the verification procedure,
 revealing gradually the relation between a proof tree and the corresponding states of the Kripke model under consideration.
-Although the Kripke model in realistic cases may be very large, thanks to the on-the-fly style of proof search in \textsf{SCTLProV}, we can only show the states that are necessary to be explored, which may be a small part of the whole model.
-The application of \vmdv{} to the theorem prover \textsf{SCTLProV} is illustrated in the following small example.
+The application of \vmdv{} to the theorem prover \textsf{SCTLProV} is illustrated in the following two examples.
  
-\begin{example}[The River Crossing Puzzle.]
+\begin{example}[The River Crossing Puzzle]
 \label{expl:river}
 A farmer is trying to transport a wolf, a goat, and a cabbage from one side of a river to another, however, he can only carry at most one item each time. During the transportation, the goat cannot be left alone with the wolf, nor the cabbage can be left alone with the goat.
 The question is how can the farmer get across the river by bringing the wolf, the goat, and the cabbage.
@@ -441,19 +431,10 @@ $$EU_{x,y}(safe(x), complete(y), S_0)$$
 starts with $EU$ modality (called $EU$-formula),
 and each application of the rule $\mathbf{EU}$-$\mathsf{R_2}$ of \textsf{SCTL} (Fig. \ref{fig:sctl_rules})
 corresponds to one unfolding step in the Kripke model. This process stops until the $\mathbf{EU}$-$\mathsf{R_1}$ applied.
-During this procedure, \vmdv{} sends messages to \textsf{SCTLProV},
-and automatically shows the newly constructed nodes both in the proof tree and in the Kripke model (Fig. \ref{fig:river_prooftreegraph_step}).
 This way, when we highlight all nodes with $EU$-formulas in the proof search tree, 
 a path of states in the Kripke model is also highlighted, certifying this proof (Fig. \ref{fig:river_path}).
-%\vspace{-10pt}
+
 \begin{figure}[h!]
-\centering
-\includegraphics[width=8.5cm]{./river_prooftreegraph_step.png}
-\caption{Building the proof tree and the Kripke model stepwise}
-\label{fig:river_prooftreegraph_step}
-\end{figure}
-\begin{figure}[h!]
-%\vspace{0.5cm}
 \centering
 \includegraphics[width=8cm]{./river_prooftreegraph_state_highlight.png}
 %\caption{A path is highlighted in the model when all the nodes in the proof tree with $EU$-formulas are highlighted}
@@ -462,56 +443,84 @@ a path of states in the Kripke model is also highlighted, certifying this proof 
 \label{fig:river_path}
 \end{figure}
 %\vspace{-5pt}
+\begin{example} [The Small Aircraft Transportation System]
+	As an application to an engineering problem, we present
+	a concept of operations for the {\em Small Aircraft Transportation System} 
+	(\textsf{SATS}) 
+	\cite{MunozDC04,nasasats04}
+	in \textsf{SCTLProV}\footnote{\url{https://github.com/terminatorlxj/SATS-model}}.
+	
+	In this concept of operations, the airspace volume surrounding an
+	airport facility, called {\em the self controlled area}, is divided into
+	15 zones (Figure \ref{fig:example:sats:sca}).
+	\begin{figure}
+		\centering
+		\includegraphics[width=6cm]{./sca.jpg}
+		\caption{SCA zones, where right and left are relative to the pilot facing the runway, i.e., opposite from the reader point of view \cite{MunozDC04}.}
+		\label{fig:example:sats:sca}
+	\end{figure}
+	For instance, the zone {\tt holding3(right)} is a holding pattern at
+	3000 feet on the right of the self controlled area.
+	Each zone contains a list of aircraft and 24 transition rules
+	specify different SATS-procedures.
+	For instance, the rule \textbf{Vertical Entry (right)}
+	specifies the vertical entry of an aircraft in the zone
+	{\tt holding3(right)}. 
+	
+	The model is
+	non-deterministic, that is, for a given state, several transitions are
+	possible and all must be considered.  As there are no a
+	priori bounds on the number of aircraft in each zone, the number of
+	states in the model is potentially infinite. However, the number of
+	states that are reachable from the initial state is finite: 
+	an enumeration of the model shows that there are 54221 such states (and
+	around 3000 in the simplified model where departure operations are not
+	considered \cite{MunozDC04}).
+	
+	There are eight properties of the model that we want to 
+	verify with \textsf{SCTLProV}, for instance that 
+	the \textsf{SATS} concept does not allow more than four simultaneous 
+	landing operations and none of the 
+	15 zones contains too many aircraft (each zone is
+	assigned a maximum number of aircraft and the actual number of
+	aircraft is never higher than this number).
+	The safety property is the conjunction of these eight properties. 
+	
+	The verification problem is to check that this
+	property holds on every reachable state from the initial state (the
+	state where there are no aircraft on each zone of the self controlled
+	area), so the formula to be checked is $AG_x(\phi)(e)$ where $\phi$ is 
+	the safety property and $e$ is the initial state.
+	
+	We have been able to check in
+	\textsf{SCTLProV} that the safety property holds on every reachable state from the initial state in the model.
+	The visualization of the proof tree and the Kripke model is depicted in Fig. \ref{fig:sats}.
+	
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=10cm]{./sats_prooftree_model.png}
+		\caption{The visualization of the proof tree and the Kripke model of the SATS system}
+		\label{fig:sats}
+	\end{figure}
+
+	Moreover, to have a better understanding of the Kripke model, \tool{VMDV} can be used to visualize the distribution of aircraft in each zone of the SATS model. For instance, Fig. \ref{fig:sats:holding3right} and Fig. \ref{fig:sats:departureleft} show the distribution of aircraft in the zone {\tt holding3(right)} and {\tt departure(left)}, respectively, where ...
+	
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=10cm]{sats_holding3right.png}
+		\caption{The distribution of aircraft in the zone {\tt holding3(right)}}
+		\label{fig:sats:holding3right}
+	\end{figure}
+
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=10cm]{sats_departureleft.png}
+		\caption{The distribution of aircraft in the zone {\tt departure(left)}}
+		\label{fig:sats:departureleft}
+	\end{figure}
+	
+\end{example}
  
-In \textsf{SCTL}, the proof tree for formulas starting with different modalities are clearly distinguishable from each other,
-the same scenario holds for the related part in the Kripke model under consideration.
-For instance, the main part of a proof tree of an $EU$-formula corresponds to a finite path in the model,
-testifying this proof.
-While for verifying an $AG$-formula,
-both the proof tree and the related part in the Kripke model may appear very complicated
-(Fig. \ref{fig:ag_proof}).
-In this situation, one may focus on a part of the proof tree each time,
-and track the corresponding part of the state transitions (Fig. \ref{fig:ag_part_detail}).
-%\vspace{-10pt}
-\begin{figure}[h!]
-\centering
-\includegraphics[width=9cm]{./ag_proof_state.png}
-\caption{The proof tree (left) and the Kripke model (right) for the verification of an $AG$-formula in \textsf{SCTL}.}
-\label{fig:ag_proof}
-\end{figure}
-\begin{figure}[h!]
-%\vspace{0.5cm}
-\centering
-\includegraphics[width=9cm]{./ag_part_detail.png}
-\caption{Focus on a subtree and highlight related state transitions}
-%\vspace{-10pt}
-\label{fig:ag_part_detail}
-\end{figure}
- 
-\subsection{A Small Example of Coq}
-We illustrate, by a small example, how \vmdv{} can visualize proof trees produced by Coq. In Coq, the steps of interactive proof of a formula is controlled by a proof script. Each step of the proof script introduces new proof goals based on the current proof goal. Thus, we formulate the proof tree in such a manner that each proof goal is formulated as a node, and all sub-goals of the current goal are formulated as the sub-nodes of the current node. If the current goal has no sub-goal, then the current node is a leaf node. For instance, the proof script of the formula
-$${\small \forall A\; B\; C\; : Prop,\; (A\rightarrow(B\rightarrow C))\rightarrow ((A\rightarrow B)\rightarrow(A\rightarrow C))}$$
-is
-\begin{center}
-\begin{verbatim}
-Proof.
-  intros A B C. intros H1 H2 H3.
-  apply H1. assumption. apply H2. assumption.
-Qed.
-\end{verbatim}
-\end{center}
-There are 7 steps (the first ``assumption" comprise two steps: finish the current goal, and jump to the next goal) in this proof script. Thus, the proof tree should have 7 edges, as shown in Fig. \ref{fig:coq_example}.
- 
-%\vspace{-10pt}
-\begin{figure}
-\centering
-\includegraphics[width=6cm]{./coq_example.png}
-\caption{Proof tree in the Coq example.}
-%\vspace{-10pt}
-\label{fig:coq_example}
-\end{figure}
-%Note that this is a naively formulation of the proof tree produced by Coq.
-In order to visualize proof trees produced by Coq in \vmdv{}, one usually has two options. The first option is to build an integrated development environment (IDE) for the coq toplevel system (coqtop\footnote{\url{https://www.mankier.com/1/coqtop}}) from scratch, and let the IDE communicate with \vmdv{}. In this situation, the developer may have to handle many basic and cumbersome I/O problems of the IDE and coqtop. The second option is to build a wrapper upon existing interfaces for coqtop, such as coqide\footnote{\url{https://www.mankier.com/1/coqide}}, or Proof General\footnote{\url{https://proofgeneral.github.io/}}. These existing interfaces are usually much more flexible and easy to extend. The developer will then adapt the XML protocol specified by coqide or Proof General and translate the message into the TCP packets that are understandable by \vmdv{}, which is very straightforward. We prefer the second option, and our interface is now under development. We believe that designing such a interface would guide the interactive proof in Coq in a much more friendly way with visualization, and may be helpful in the education classes.
 
 \section{Conclusion and Future Works}
 
