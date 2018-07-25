@@ -22,8 +22,7 @@
        Yanyun Chen\IEEEauthorrefmark{1}}
 }}
 
-\author{}
-
+\author{Authors}
 
 \maketitle
 
@@ -161,7 +160,7 @@ Section \textsf{V} concerns conclusion and future works.
 \section{Preliminaries}
 In this section, we first present the concept of information visualization, and then present the basic definitions of a proof system called \textsf{SCTL} which is a sequent calculus for Computation Tree Logic (\textsf{CTL}) \cite{EmersonC82,EmersonH85}, and also an automated theorem prover \textsf{SCTLProV} that implements the \textsf{SCTL} system.
 
-{\color{blue}
+
 \subsection{Information Visualization, \tool{OpenGL}, and \tool{VTK}}
 \paragraph{Information Visualization}
 Information visualization is the study of visual representation of abstract data that focus on the creation of approaches for humans to capture abstract information intuitively. With the visual representations of data, it is easier for humans to get a deeper understanding, and gain the essentials over the massive data-sets.
@@ -181,7 +180,7 @@ We apply the ideas of information visualization to the development of \textsf{VM
        \item The presentation of data in 3D space, where the data points are encoded as 3D solid spheres, and the structure of data are encodes as lines between solid spheres;
        \item Visual interaction with data, such as highlighting the search results for specific data, or controlling the progress of producing new data.
 \end{itemize}
-}
+
  
 \subsection{\textsf{SCTL} and \textsf{SCTLProV}}
 Model checking \cite{CGP01,EmersonC82,EmersonH85} and automated theorem proving
@@ -201,7 +200,7 @@ Formulas are built in the usual way with the connectors $\top$, $\bot$, $\wedge$
 The semantics of a \textsf{SCTL} formula is defined as follows, 
 the proof rules for the system \textsf{SCTL} is depicted in Fig. \ref{fig:sctl_rules}.
  
-\begin{definition}[Valid formula]\color{blue}
+\begin{definition}[Valid formula]
 Let $\mathcal{M}$ be a model and $\phi$ be a closed formula, the set of valid formulas $\models \phi$ in the model $\mathcal{M}$ is defined by induction on $\phi$:
  
 \begin{itemize}
@@ -319,9 +318,23 @@ In the design of \vmdv{}, the theorem prover is not supposed to know exactly how
  
 Note that \vmdv{} allows multiple outputs to visualize multiple structures, proof trees, or, e.g., proof trees and Kripke models in \textsf{SCTL} system.
  
-% \vmdv{} is implemented in Java\footnote{\url{https://www.oracle.com/java/index.html}} and rendered using \textsf{JOGL},\footnote{\url{http://jogamp.org/jogl/www/}} the Java binding of the \textsf{OpenGL} \textsf{API}.
- 
-%\vspace{-10pt}
+
+{\color{red}
+
+\subsection{\bf The Presentation of 3D Graphs}
+In \tool{VMDV}, there are two kinds of graphs that can be visualized in 3D space: trees and directed graphs. Usually, a proof tree of a formula is represented as as a 3D tree, while a Kripke model in the \textsf{SCTL} system is represented as a 3D directed graph.
+In the visualization of a proof tree, each node of the proof tree is visualized as a solid sphere, and it connects all its children (if any) via 3D lines. In the visualization of a Kripke model, each state is visualized as a solid sphere, and it connects all its successors via 3D lines. The layout strategies of trees and directed graphs are different: trees are visualized as cones, while the layout of directed graphs uses forced-based layout algorithms.
+
+
+
+The presentation of 3D graphs
+
+
+
+}
+
+
+
 \subsection{Interfaces}
 \begin{figure}[t]
 	\centering
@@ -329,12 +342,11 @@ Note that \vmdv{} allows multiple outputs to visualize multiple structures, proo
 	\caption{A typical screenshot of \textsf{VMDV}.}
 	\label{fig:screenshot}
 \end{figure}
-Fig. \ref{fig:screenshot} shows a typical screenshot of \textsf{VMDV}. It consists of two panels: the main panel on the top shows the overall structure of the proof tree, and the panel at the bottom shows the details of the selected nodes.
+Fig. \ref{fig:screenshot} shows a typical screenshot of \textsf{VMDV}. 
 Similar to other 3D visualization tools, \vmdv{} adopts some commonly used operations (for instance, zooming, rotation, and selection) to interact with 3D graphs. Furthermore, \vmdv{} provides mechanisms to extend its functionalities to fulfill the special requirements of different kinds of theorem provers.
 
 
-\hspace{-0.5cm}
-{\bf Zooming and rotation.}
+\paragraph{\bf Zooming and rotation.}
 The most obvious advantage of 3D visualization over 2D one is the capacity of observing a graph from different angles of view. Although there exist different ways to plot a 2D graph, it is still hard to match the 3D solution when the structure of the graph is too complicated to present in 2D space. 3D visualization techniques handle this easily using two operations, zooming and rotation: zooming in to see the details, zooming out to capture the overall shape, and rotating the tree to locate the sub-tree of interest, as are shown in Fig. \ref{fig:prooftree_angles}.
  
 \begin{figure}[h]
@@ -371,8 +383,7 @@ Sometimes some local information (for instance, specific nodes, edges, or proof 
 % \hspace{-0.5cm}
 % {\bf Focusing on a specific subtree.}
 % In many cases, interesting information may be carried out by specific subtrees. To concentrate on these subtrees, the nodes that are not related are hidden. Additional operations can then be applied only on these subtrees. The focusing of a subtree is easily done by changing the root node. A reset operation will recover the entire tree (Fig. \ref{fig:prooftree_angles}).
- 
-{\color{blue} 
+
 \vspace{0.1cm}
 \hspace{-0.5cm}
 {\bf Extended Operations.}
@@ -385,7 +396,6 @@ This way, defining operations for new theorem provers in \vmdv{} can be implemen
 % The defining of a new operation in \vmdv{} includes two steps: first, define a set of actions that can be applied to 3D graphs; second, define triggers to activate these actions. In the first step, we wrap actions that can be applied to 3D graphs as \textsf{Affect} objects that all implement a Java interface named \textsf{AssistAffect}. Thus, new actions can be defined by adding new \textsf{Affect} objects that implement \textsf{AssistAffect}. In the second step, we define a set of \textsf{Trigger} objects that can be used to trigger the newly defined actions in the first step. All \textsf{Trigger} objects implement an Java interface \textsf{PopupItem}, which can be added to \vmdv{} as pop-up menu items at the initialization phrase of the GUI. One can select a pop-up menu item to activate a \textsf{Trigger} object when right clicked the mouse. 
  
 
-} 
  
 
 % \subsection{Automatic Layout}
@@ -503,7 +513,7 @@ a path of states in the Kripke model is also highlighted, certifying this proof 
 		\label{fig:sats}
 	\end{figure}
 
-	Moreover, to have a better understanding of the Kripke model, \tool{VMDV} can be used to visualize the distribution of aircraft in each zone of the SATS model. For instance, Fig. \ref{fig:sats:holding3right} and Fig. \ref{fig:sats:departureleft} show the distribution of aircraft in the zone {\tt holding3(right)} and {\tt departure(left)}, respectively, where ...
+	Moreover, to have a better understanding of the Kripke model, \tool{VMDV} can be used to visualize the distribution of aircraft in each zone of the SATS model. For instance, Fig. \ref{fig:sats:holding3right} and Fig. \ref{fig:sats:departureleft} show the distribution of aircraft in the zone {\tt holding3(right)} and {\tt departure(left)}, respectively, where we use the orange color to highlight the states where the given zone has aircraft, and the the more aircraft in the zone, the darker the color is.
 	
 	\begin{figure}[h!]
 		\centering

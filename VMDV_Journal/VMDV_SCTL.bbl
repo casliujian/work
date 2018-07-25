@@ -60,6 +60,16 @@ Libal, T., Riener, M., Rukhaia, M.: Advanced proof viewing in prooftool. In:
 Loveland, D.W.: Automated Theorem Proving: A Logical Basis (Fundamental Studies
   in Computer Science). Elsevier (1978)
 
+\bibitem{MunozDC04}
+Mu{\~{n}}oz, C.A., Dowek, G., Carre{\~{n}}o, V.: Modeling and verification of
+  an air traffic concept of operations. In: Proceedings of the {ACM/SIGSOFT}
+  International Symposium on Software Testing and Analysis, {ISSTA} 2004. pp.
+  175--182. ACM, USA, Boston, Massachusetts, USA (11-14 July 2004)
+
+\bibitem{nasasats04}
+NASA/TM-2004-213006: Abstract Model of SATS Concept of Operations: Initial
+  Results and Recommendations. NASA, USA (2004)
+
 \bibitem{sakurai2011mikibeta}
 Sakurai, K., Asai, K.: Mikibeta: A general {GUI} library for visualizing proof
   trees. In: Logic-Based Program Synthesis and Transformation, pp. 84--98.
