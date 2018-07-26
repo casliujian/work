@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6745 64-bit) (preloaded format=pdflatex 2018.7.3)  25 JUL 2018 21:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6745 64-bit) (preloaded format=pdflatex 2018.7.3)  26 JUL 2018 14:58
 entering extended mode
 **./VMDV_SCTL.tex
 (VMDV_SCTL.tex
@@ -486,7 +486,12 @@ File: ./compare_123.png Graphic file (type png)
 <use ./compare_123.png>
 Package pdftex.def Info: ./compare_123.png  used on input line 90.
 (pdftex.def)             Requested size: 256.0748pt x 130.87436pt.
- [2 <./compare_123.png>]
+
+
+LaTeX Warning: Reference `fig:screenshot' on page 2 undefined on input line 104
+.
+
+[2 <./compare_123.png>]
 Underfull \vbox (badness 3009) has occurred while \output is active []
 
  [3]
@@ -512,30 +517,27 @@ Package pdftex.def Info: ./architecture.png  used on input line 311.
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [5] [6 <./architecture.png>]
-<./050407.png, id=45, 857.45343pt x 775.39688pt>
-File: ./050407.png Graphic file (type png)
-<use ./050407.png>
-Package pdftex.def Info: ./050407.png  used on input line 341.
-(pdftex.def)             Requested size: 213.39566pt x 192.9732pt.
-<./phi_prooftreegraph_angles.png, id=46, 828.84656pt x 410.2828pt>
+<./high_different2.png, id=45, 1284.29813pt x 911.65594pt>
+File: ./high_different2.png Graphic file (type png)
+<use ./high_different2.png>
+Package pdftex.def Info: ./high_different2.png  used on input line 332.
+(pdftex.def)             Requested size: 341.43306pt x 242.36667pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[7]
+<./phi_prooftreegraph_angles.png, id=50, 828.84656pt x 410.2828pt>
 File: ./phi_prooftreegraph_angles.png Graphic file (type png)
 <use ./phi_prooftreegraph_angles.png>
 Package pdftex.def Info: ./phi_prooftreegraph_angles.png  used on input line 35
-4.
+9.
 (pdftex.def)             Requested size: 256.0748pt x 126.75438pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./high_different.png, id=47, 854.44218pt x 911.65594pt>
-File: ./high_different.png Graphic file (type png)
-<use ./high_different.png>
-Package pdftex.def Info: ./high_different.png  used on input line 365.
-(pdftex.def)             Requested size: 256.0748pt x 273.22067pt.
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<./user_defined_operation.png, id=48, 338.76563pt x 355.3275pt>
+<./user_defined_operation.png, id=51, 338.76563pt x 355.3275pt>
 File: ./user_defined_operation.png Graphic file (type png)
 <use ./user_defined_operation.png>
 Package pdftex.def Info: ./user_defined_operation.png  used on input line 371.
@@ -543,67 +545,75 @@ Package pdftex.def Info: ./user_defined_operation.png  used on input line 371.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[7]
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [8 <./050407.png>] [9 <./phi_prooftreegraph_angles.png> <./high_different.png>
-]
-LaTeX Font Info:    Try loading font information for OMS+cmss on input line 422
+Underfull \vbox (badness 2150) has occurred while \output is active []
+
+ [8 <./high_different2.png>] [9 <./phi_prooftreegraph_angles.png> <./user_defin
+ed_operation.png>]
+LaTeX Font Info:    Try loading font information for OMS+cmss on input line 419
 .
-LaTeX Font Info:    No file OMScmss.fd. on input line 422.
+LaTeX Font Info:    No file OMScmss.fd. on input line 419.
 
 
 LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbraceleft' on input line 422.
+(Font)              for symbol `textbraceleft' on input line 419.
 
-[10 <./user_defined_operation.png>]
-<./river_prooftreegraph_state_highlight.png, id=62, 1172.88188pt x 548.0475pt>
+<./river_prooftreegraph_state_highlight.png, id=58, 1172.88188pt x 548.0475pt>
 File: ./river_prooftreegraph_state_highlight.png Graphic file (type png)
 <use ./river_prooftreegraph_state_highlight.png>
 Package pdftex.def Info: ./river_prooftreegraph_state_highlight.png  used on in
-put line 449.
+put line 446.
 (pdftex.def)             Requested size: 227.62204pt x 106.35454pt.
-<./sca.jpg, id=63, 624.3325pt x 616.3025pt>
+<./sca.jpg, id=59, 624.3325pt x 616.3025pt>
 File: ./sca.jpg Graphic file (type jpg)
 <use ./sca.jpg>
-Package pdftex.def Info: ./sca.jpg  used on input line 468.
+Package pdftex.def Info: ./sca.jpg  used on input line 465.
 (pdftex.def)             Requested size: 170.71652pt x 168.51979pt.
- [11 <./river_prooftreegraph_state_highlight.png>]
-<./sats_prooftree_model.png, id=69, 1861.7053pt x 783.67781pt>
+[10 <./river_prooftreegraph_state_highlight.png>]
+<./sats_prooftree_model.png, id=64, 1861.7053pt x 783.67781pt>
 File: ./sats_prooftree_model.png Graphic file (type png)
 <use ./sats_prooftree_model.png>
-Package pdftex.def Info: ./sats_prooftree_model.png  used on input line 511.
+Package pdftex.def Info: ./sats_prooftree_model.png  used on input line 508.
 (pdftex.def)             Requested size: 284.52756pt x 119.77077pt.
- [12 <./sca.jpg> <./sats_prooftree_model.png>]
-<sats_holding3right.png, id=73, 1445.4pt x 782.925pt>
+
+Underfull \vbox (badness 5622) has occurred while \output is active []
+
+ [11 <./sca.jpg>]
+<sats_holding3right.png, id=69, 1445.4pt x 782.925pt>
 File: sats_holding3right.png Graphic file (type png)
 <use sats_holding3right.png>
-Package pdftex.def Info: sats_holding3right.png  used on input line 520.
+Package pdftex.def Info: sats_holding3right.png  used on input line 517.
 (pdftex.def)             Requested size: 284.52756pt x 154.12125pt.
-<sats_departureleft.png, id=74, 1445.4pt x 782.925pt>
+<sats_departureleft.png, id=70, 1445.4pt x 782.925pt>
 File: sats_departureleft.png Graphic file (type png)
 <use sats_departureleft.png>
-Package pdftex.def Info: sats_departureleft.png  used on input line 527.
+Package pdftex.def Info: sats_departureleft.png  used on input line 524.
 (pdftex.def)             Requested size: 284.52756pt x 154.12125pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [13 <./sats_holding3right.png> <./sats_departureleft.png>] (VMDV_SCTL.bbl [14]
-) [15]
-(VMDV_SCTL.aux)
+ [12 <./sats_prooftree_model.png> <./sats_holding3right.png>] (VMDV_SCTL.bbl [1
+3 <./sats_departureleft.png>]) [14] (VMDV_SCTL.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 2966 strings out of 492973
- 41916 string characters out of 3127136
- 127679 words of memory out of 3000000
- 6755 multiletter control sequences out of 15000+200000
+ 2964 strings out of 492973
+ 41889 string characters out of 3127136
+ 127685 words of memory out of 3000000
+ 6754 multiletter control sequences out of 15000+200000
  14628 words of font info for 55 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,23n,28p,1045b,444s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,23n,28p,1242b,444s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/
 cm/cmbx10.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
 ic/amsfonts/cm/cmbx12.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/font
@@ -633,9 +643,9 @@ cm/cmsy9.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publi
 c/amsfonts/cm/cmti10.pfb><C:/Users/Jian/AppData/Local/Programs/MiKTeX 2.9/fonts
 /type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/Jian/AppData/Local/Programs/MiKT
 eX 2.9/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on VMDV_SCTL.pdf (15 pages, 9766554 bytes).
+Output written on VMDV_SCTL.pdf (14 pages, 9680008 bytes).
 PDF statistics:
- 162 PDF objects out of 1000 (max. 8388607)
+ 158 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 56 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 51 words of extra memory for PDF output out of 10000 (max. 10000000)
 

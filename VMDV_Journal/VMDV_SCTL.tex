@@ -323,18 +323,23 @@ Note that \vmdv{} allows multiple outputs to visualize multiple structures, proo
 
 \subsection{\bf The Presentation of 3D Graphs}
 In \tool{VMDV}, there are two kinds of graphs that can be visualized in 3D space: trees and directed graphs. Usually, a proof tree of a formula is represented as as a 3D tree, while a Kripke model in the \textsf{SCTL} system is represented as a 3D directed graph.
-In the visualization of a proof tree, each node of the proof tree is visualized as a solid sphere, and it connects all its children (if any) via 3D lines. In the visualization of a Kripke model, each state is visualized as a solid sphere, and it connects all its successors via 3D lines. The layout strategies of trees and directed graphs are different: trees are visualized as cones, while the layout of directed graphs uses forced-based layout algorithms.
-
-
-
-The presentation of 3D graphs
-
+In the visualization of a proof tree, each node of the proof tree is visualized as a solid sphere, and it connects all its children (if any) via 3D lines. In the visualization of a Kripke model, each state is visualized as a solid sphere, and it connects all its successors via 3D lines. The layout strategies of trees and directed graphs are different: trees are visualized as cones, while the layout of directed graphs uses forced-based layout algorithms \cite{jacomy2014forceatlas2,yifanhu05}.
+In this way, each node of a 3D graph is associated a location in the 3D space.
+However, in order to retrieve more information from visualization, it is tempting to associate more information to each node. 
+For instance, Fig. \ref{fig:high_different} shows the visualization of different information of a proof tree: (a) shows the premises of a formula (i.e., the children of a node); (b) shows a sub-tree; (c) shows the ancestors of a node in the proof tree; (d) shows the proof trees of formulae starting with the same modality; (e) shows the sub-formula of a formula in its proof tree; and finally, (f) shows parts of a proof tree where all of them are proved using the same rule. For each node of the 3D tree, we call each kind of associated information a {\it dimension}. The first three dimensions of a node form its location in the 3D space. Other dimensions are dynamically visualized as the highlighting of the nodes. For instance, Fig. \ref{fig:high_different} shows the visualization of 6 dimensions of nodes in a proof tree. Moreover, dimensions can also be dynamically added to the nodes. This is crucial to extend \tool{VMDV} with more functionalities in order to integrate with specific theorem provers. For instance, in Example \ref{expl:sats}, the number of aircraft in each zone of the SATS model can be viewed as a dimension of a node, and each such dimension can be visualized respectively. 
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=12cm]{./high_different2.png}
+	\caption{Different kinds of highlighting: (a) selection of a single node and its children; (b) selection of a subtree; (c) highlighting ancestors of a node; (d) highlighting similar proof patterns.}
+	\label{fig:high_different}
+\end{figure}
+When adding dimensions to nodes, the following interfaces of controlling the 3D graphs are needed.
 
 
 }
 
 
-
+\couic{
 \subsection{Interfaces}
 \begin{figure}[t]
 	\centering
@@ -344,7 +349,7 @@ The presentation of 3D graphs
 \end{figure}
 Fig. \ref{fig:screenshot} shows a typical screenshot of \textsf{VMDV}. 
 Similar to other 3D visualization tools, \vmdv{} adopts some commonly used operations (for instance, zooming, rotation, and selection) to interact with 3D graphs. Furthermore, \vmdv{} provides mechanisms to extend its functionalities to fulfill the special requirements of different kinds of theorem provers.
-
+}
 
 \paragraph{\bf Zooming and rotation.}
 The most obvious advantage of 3D visualization over 2D one is the capacity of observing a graph from different angles of view. Although there exist different ways to plot a 2D graph, it is still hard to match the 3D solution when the structure of the graph is too complicated to present in 2D space. 3D visualization techniques handle this easily using two operations, zooming and rotation: zooming in to see the details, zooming out to capture the overall shape, and rotating the tree to locate the sub-tree of interest, as are shown in Fig. \ref{fig:prooftree_angles}.
@@ -360,12 +365,7 @@ The most obvious advantage of 3D visualization over 2D one is the capacity of ob
 %\vspace{-0.5cm}
  
  
-\begin{figure}[h!]
-\centering
-\includegraphics[width=9cm]{./high_different.png}
-\caption{Different kinds of highlighting: (a) selection of a single node and its children; (b) selection of a subtree; (c) highlighting ancestors of a node; (d) highlighting similar proof patterns.}
-\label{fig:high_different}
-\end{figure}
+
 \begin{figure}[h!]
 \centering
 \includegraphics[width=5cm]{./user_defined_operation.png}
@@ -375,18 +375,15 @@ The most obvious advantage of 3D visualization over 2D one is the capacity of ob
 \end{figure}
 \smallskip
 
+\couic{
 \hspace{-0.48cm}
 {\bf Highlighting.}
 Sometimes some local information (for instance, specific nodes, edges, or proof patterns) is more interesting rather than the overall structure. Highlighting becomes a useful operation to show the local focused parts of the given proof tree. \vmdv{} enables highlighting parts of the proof tree either by manual selection using mouse clicking, or by automatic selection via formulae searching. (Fig. \ref{fig:high_different})\footnote{In \vmdv{}, we say that the proofs of two formulas have similar pattern if the first rules applied in the two bottom-up proofs are the same. For instance, if the proofs of two formulas in \textsf{SCTL} have similar pattern, then according to the rules in Fig. \ref{fig:sctl_rules}, both formulas must have the same modality or connector, or both are atomic formulas with the same predicate.}
 \smallskip
+}
 
-% \hspace{-0.5cm}
-% {\bf Focusing on a specific subtree.}
-% In many cases, interesting information may be carried out by specific subtrees. To concentrate on these subtrees, the nodes that are not related are hidden. Additional operations can then be applied only on these subtrees. The focusing of a subtree is easily done by changing the root node. A reset operation will recover the entire tree (Fig. \ref{fig:prooftree_angles}).
 
-\vspace{0.1cm}
-\hspace{-0.5cm}
-{\bf Extended Operations.}
+\paragraph{\bf Extended Operations.}
 In addition to the commonly used operations, some other operations that are specific to theorem provers are also needed, so that \vmdv{} can be adapted to different theorem provers. The controlling of the construction of both the proof tree and the Kripke model in the \textsf{SCTL} system is a good example. 
 % Recall that in Fig. \ref{fig:architecture}, there are two kinds of 
 The way of defining extended operations in \vmdv{} can be explained as follows: firstly, we define the operations of 3D graphics in \tool{VMDV} as a set of \tool{Python} objects, called the \textsf{Affect} objects; secondly, we define another set of \tool{Python} objects, called the \textsf{Trigger} objects, to load and execute the code in the \textsf{Affect} objects, i.e., to trigger the operations of 3D graphics; finally, we associate each \textsf{Trigger} object to a pop-up menu item, such that one can select a pop-up menu item to activate the associated \textsf{Trigger} object when right clicked the mouse (Fig.~\ref{fig:user_defined_operation}).
@@ -453,7 +450,7 @@ a path of states in the Kripke model is also highlighted, certifying this proof 
 \label{fig:river_path}
 \end{figure}
 %\vspace{-5pt}
-\begin{example} [The Small Aircraft Transportation System]
+\begin{example} [The Small Aircraft Transportation System]\label{expl:sats}
 	As an application to an engineering problem, we present
 	a concept of operations for the {\em Small Aircraft Transportation System} 
 	(\textsf{SATS}) 

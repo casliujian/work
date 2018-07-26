@@ -47,6 +47,10 @@ Farmer, W.M., Grigorov, O.G.: Panoptes: An exploration tool for formal proofs.
 Fitting, M.: First-Order Logic and Automated Theorem Proving, Second Edition.
   Graduate Texts in Computer Science, Springer (1996)
 
+\bibitem{yifanhu05}
+Hu, Y.: Efficient and high quality force-directed graph drawing. The
+  Matematical Journal  \textbf{10},  149--160 (2005)
+
 \bibitem{LiuDJJ16}
 Jiang, Y., Liu, J., Dowek, G., Ji, K.: {SCTL:} towards combining model checking
   and proof checking. arXiv  (2017)
@@ -59,6 +63,11 @@ Libal, T., Riener, M., Rukhaia, M.: Advanced proof viewing in prooftool. In:
 \bibitem{Loveland78}
 Loveland, D.W.: Automated Theorem Proving: A Logical Basis (Fundamental Studies
   in Computer Science). Elsevier (1978)
+
+\bibitem{jacomy2014forceatlas2}
+Mathieu, J., Tommaso, V., Sebastien, H., Bastian, M.: Forceatlas2, a continuous
+  graph layout algorithm for handy network visualization designed for the gephi
+  software. PLOS ONE  \textbf{9}(6),  e98679 (2014)
 
 \bibitem{MunozDC04}
 Mu{\~{n}}oz, C.A., Dowek, G., Carre{\~{n}}o, V.: Modeling and verification of
